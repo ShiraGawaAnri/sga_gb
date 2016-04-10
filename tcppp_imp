@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 DEV="eth0"
 UPLINK=3200
 #下行downlink 3200 k 大概一半左右,以便能够得到更多的并发连接

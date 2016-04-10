@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 ##外网网卡
 IN=eth0
 ##内网网卡
