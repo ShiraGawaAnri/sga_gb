@@ -1,274 +1,78 @@
-#!/bin/bash
-DEV="eth0"
-UPLINK=3200
-#ÏÂÐÐdownlink 3200 k ´ó¸ÅÒ»°ë×óÓÒ,ÒÔ±ãÄÜ¹»µÃµ½¸ü¶àµÄ²¢·¢Á¬½Ó
-DOWNLINK=12288
-VIP1="192.168.1.159/32"
-VIP2="192.168.1.163/32"
-##Á½¸övipÓÃ»§
-echo "==================== Packetfilter and Traffic Control Á÷Á¿¿ØÖÆ By ÍøÂç¼¼Êõ²¿ Ver. 1.0===================="
-start_routing() {
-        echo -n "¶ÓÁÐÉèÖÃ¿ªÊ¼start......"
-        #tc qdisc del dev $DEV root >null 2&>1
-        #É¾³ýÔ­À´µÄ¶ÓÁÐ
-        #1.Ôö¼ÓÒ»¸ö¸ù¶ÓÁÐ£¬Ã»ÓÐ½øÐÐ·ÖÀàµÄÊý¾Ý°ü¶¼×ßÕâ¸ö1:24ÊÇÈ±Ê¡Àà:
-        tc qdisc add dev $DEV root handle 1: htb default 24
-        #1.1Ôö¼ÓÒ»¸ö¸ù¶ÓÏÂÃæÖ÷¸ÉÀà1: ËÙÂÊÎª$UPLINK k
-        tc class add dev $DEV parent 1: classid 1:1 htb rate ${UPLINK}kbit ceil ${UPLINK}kbit prio 0
-        #1.1.1 ÔÚÖ÷¸ÉÀà1ÏÂ½¨Á¢µÚÒ»Ò¶×ÓÀà,ÕâÊÇÒ»¸ö×î¸ßÓÅÏÈÈ¨µÄÀà.ÐèÒª¸ßÓÅÏÈºÍ¸ßËÙµÄ°ü×ßÕâÌõÍ¨µÀ,±ÈÈçSYN,ACK,ICMPµÈ
-        tc class add dev $DEV parent 1:1 classid 1:11 htb rate $[$UPLINK]kbit ceil ${UPLINK}kbit prio 1
-        #1.1.2 ÔÚÖ÷Àà1ÏÂ½¨Á¢µÚ¶þÒ¶×ÓÀà ,ÕâÊÇÒ»¸ö´Î¸ßÓÅÏÈÈ¨µÄÀà¡£±ÈÈçÎÒÃÇÖØÒªµÄcrmÊý¾Ý.
-        tc class add dev $DEV parent 1:1 classid 1:12 htb rate $[$UPLINK-150]kbit ceil ${UPLINK-50}kbit prio 2
-        #1.2 ÔÚ¸ùÀàÏÂ½¨Á¢´Î¸ÉÀà classid 1:2 ¡£´Ë´Î¸ÉÀàµÄÏÂÃæÈ«²¿ÓÅÏÈÈ¨µÍÓÚÖ÷¸ÉÀà,ÒÔ·ÀÖØÒªÊý¾Ý¶ÂÈû.
-        tc class add dev $DEV parent 1: classid 1:2 htb rate $[$UPLINK-150]kbit prio 3
-        #1.2.1 ÔÚ´Î¸ÉÀàÏÂ½¨Á¢µÚÒ»Ò¶×ÓÀà,¿ÉÒÔÅÜÀýÈçhttp,popµÈ.
-        tc class add dev $DEV parent 1:2 classid 1:21 htb rate 100kbit ceil $[$UPLINK-150]kbit prio 4
-        #1.2.2 ÔÚ´Î¸ÉÀàÏÂ½¨Á¢µÚ¶þÒ¶×ÓÀà¡£²»ÒªÌ«¸ßµÄËÙ¶È,ÒÔ·À·¢´óµÄ¸½¼þ´óÁ¿Õ¼ÓÃ´ø¿í,ÀýÈçsmtpµÈ
-        tc class add dev $DEV parent 1:2 classid 1:22 htb rate 30kbit ceil $[$UPLINK-160]kbit prio 5
-        #1.2.3 ÔÚ´Î¸ÉÀàÏÂ½¨Á¢µÚÈýÒ¶×ÓÀà¡£²»ÒªÌ«¶àµÄ´ø¿í,ÒÔ·À´óÁ¿µÄÊý¾Ý¶ÂÈûÍøÂç,ÀýÈçftp-dataµÈ,
-        tc class add dev $DEV parent 1:2 classid 1:23 htb rate 15kbit ceil $[$UPLINK-170]kbit prio 6
-        #1.2.4 ÔÚ´Î¸ÉÀàÏÂ½¨Á¢µÚËÄÒ¶×ÓÀà¡£ÎÞËùÎ½µÄÊý¾ÝÍ¨µÀ,ÎÞÐèÒªÌ«¶àµÄ´ø¿í,ÒÔ·ÀÎÞËùÎ½µÄÈËÔÚ×è°­ÕýÎñ.
-        tc class add dev $DEV parent 1:2 classid 1:24 htb rate 5kbit ceil $[$UPLINK-250]kbit prio 7
-      
-        #1.3  ÔÚÖ÷¸ÉÀà1ÏÂ½¨Á¢µÚÈýÒ¶×ÓÀà£¬¸øVIPÓÃ»§£¨¾¡Á¿²»ÏÞËÙ£©
-        tc class add dev $DEV parent 1: classid 1:3 htb rate $[$UPLINK+1000]kbit prio 3
-       
-        #ÔÚÃ¿¸öÀàÏÂÃæÔÙ¸½¼ÓÉÏÁíÒ»¸ö¶ÓÁÐ¹æ¶¨,Ëæ»ú¹«Æ½¶ÓÁÐ(SFQ)£¬²»±»Ä³¸öÁ¬½Ó²»Í£Õ¼ÓÃ´ø¿í,ÒÔ±£Ö¤´ø¿íµÄÆ½¾ù¹«Æ½Ê¹ÓÃ£º
-        #SFQ(Stochastic Fairness Queueing£¬Ëæ»ú¹«Æ½¶ÓÁÐ),SFQµÄ¹Ø¼ü´ÊÊÇ¡°»á»°¡±(»ò³Æ×÷¡°Á÷¡±) £¬
-        #Ö÷ÒªÕë¶ÔÒ»¸öTCP»á»°»òÕßUDPÁ÷¡£Á÷Á¿±»·Ö³ÉÏàµ±¶àÊýÁ¿µÄFIFO¶ÓÁÐÖÐ£¬Ã¿¸ö¶ÓÁÐ¶ÔÓ¦Ò»¸ö»á»°¡£
-        #Êý¾Ý°´ÕÕ¼òµ¥ÂÖ×ªµÄ·½Ê½·¢ËÍ, Ã¿¸ö»á»°¶¼°´Ë³ÐòµÃµ½·¢ËÍ»ú»á¡£ÕâÖÖ·½Ê½·Ç³£¹«Æ½£¬±£Ö¤ÁËÃ¿Ò»
-        #¸ö»á»°¶¼²»»áÃ»ÆäËü»á»°ËùÑÍÃ»¡£SFQÖ®ËùÒÔ±»³ÆÎª¡°Ëæ»ú¡±£¬ÊÇÒòÎªËü²¢²»ÊÇÕæµÄÎªÃ¿Ò»¸ö»á»°´´½¨
-        #Ò»¸ö¶ÓÁÐ£¬¶øÊÇÊ¹ÓÃÒ»¸öÉ¢ÁÐËã·¨£¬°ÑËùÓÐµÄ»á»°Ó³Éäµ½ÓÐÏÞµÄ¼¸¸ö¶ÓÁÐÖÐÈ¥¡£
-        #²ÎÊýperturbÊÇ¶àÉÙÃëºóÖØÐÂÅäÖÃÒ»´ÎÉ¢ÁÐËã·¨¡£Ä¬ÈÏÎª10
-        tc qdisc add dev $DEV parent 1:11 handle 111: sfq perturb 5
-        tc qdisc add dev $DEV parent 1:12 handle 112: sfq perturb 5
-        tc qdisc add dev $DEV parent 1:3 handle 13: sfq perturb 5
-        tc qdisc add dev $DEV parent 1:21 handle 121: sfq perturb 10
-        tc qdisc add dev $DEV parent 1:22 handle 122: sfq perturb 10
-        tc qdisc add dev $DEV parent 1:23 handle 133: sfq perturb 10
-        tc qdisc add dev $DEV parent 1:24 handle 124: sfq perturb 10
-        echo "¶ÓÁÐÉèÖÃ³É¹¦.done."
-        echo -n "ÉèÖÃ°ü¹ýÂË Setting up Filters......"
-        #ÕâÀïÉèÖÃ¹ýÂËÆ÷,handle ÊÇiptables×÷markµÄÖµ,ÈÃ±»iptables ÔÚmangleÁ´×öÁËmarkµÄ²»Í¬µÄÖµÑ¡Ôñ²»Í¬µÄÍ¨
-        #µÀclassid,¶øprio ÊÇ¹ýÂËÆ÷µÄÓÅÏÈ¼¶±ð.
-        tc filter add dev $DEV parent 1:0 protocol ip prio 1 handle 1 fw classid 1:11
-        tc filter add dev $DEV parent 1:0 protocol ip prio 2 handle 2 fw classid 1:12
-        tc filter add dev $DEV parent 1:0 protocol ip prio 3 handle 3 fw classid 1:21
-        tc filter add dev $DEV parent 1:0 protocol ip prio 3 handle 3 fw classid 1:3
-        tc filter add dev $DEV parent 1:0 protocol ip prio 4 handle 4 fw classid 1:22
-        tc filter add dev $DEV parent 1:0 protocol ip prio 5 handle 5 fw classid 1:23
-        tc filter add dev $DEV parent 1:0 protocol ip prio 6 handle 6 fw classid 1:24
-        echo "ÉèÖÃ¹ýÂËÆ÷³É¹¦.done."
-               
-########## downlink ##########################################################################
-#6. ÏÂÐÐµÄÏÞÖÆ:
-#ÉèÖÃÈë¶ÓµÄ¹æÔò,ÊÇÒòÎª°ÑÒ»Ð©¾­³£»áÔì³ÉÏÂÔØ´óÎÄ¼þµÄ¶Ë¿Ú½øÐÐ¿ØÖÆ,²»ÈÃËüÃÇÀ´µÃÌ«¿ì,µ¼ÖÂ¶ÂÈû.À´µÃÌ«¿ì
-#µÄ¾ÍÖ±½Ódrop,¾Í²»»áÀË·ÑºÍÕ¼ÓÃ»úÆ÷Ê±¼äºÍÁ¦Á¿È¥´¦ÀíÁË.
-#(1). °ÑÏÂÐÐËÙÂÊ¿ØÖÆÔÚ´ó¸Å1000-1500k×óÓÒ,ÒòÎªÕâ¸öËÙ¶ÈÒÑ¾­×ã¹»ÓÃÁË,ÒÔ±ãÄÜ¹»µÃµ½¸ü¶àµÄ²¢·¢ÏÂÔØÁ¬½Ó
-tc qdisc add dev $DEV handle ffff: ingress
-tc filter add dev $DEV parent ffff: protocol ip prio 50 handle 8 fw police rate ${DOWNLINK}kbit burst 10k drop flowid :8
+ï»¿#!/bin/bash
+##å¤–ç½‘ç½‘å¡
+IN=eth0
+##å†…ç½‘ç½‘å¡
+DEV=eth0  
+start() {
+## æ¸…é™¤ eth1 eth0 æ‰€æœ‰é˜Ÿåˆ—è§„åˆ™
+tc qdisc del dev $DEV root 2>/dev/null
+tc qdisc del dev $IN  root 2>/dev/null
+##å®šä¹‰æ€»çš„ä¸Šä¸‹å¸¦å®½
+tc qdisc add dev $DEV root handle 2: htb
+tc class add dev $DEV parent 2: classid 2:1 htb rate 3000kbit
+tc qdisc add dev $IN root handle 1: htb
+tc class add dev $IN parent 1: classid 1:1  htb rate 3000kbit
+for (( i=11; i<=50; i=i+1 ))
+do
+#####ä¸‹è½½æŽ§åˆ¶åœ¨æ¯äººå®žé™…æœ€å¤§100k/Så·¦å³
+tc class add dev $DEV parent 2:1 classid 2:2$i htb rate 100kbit ceil 500kbit burst 15k
+tc qdisc add dev $DEV parent 2:2$i handle 2$i: sfq
+tc filter add dev $DEV parent 2:0 protocol ip prio 4 u32 match ip dst 172.16.36.$i flowid 2:2$i
+#####ä¸Šä¼ æŽ§åˆ¶åœ¨æ¯äººå®žé™…æœ€å¤§34K/Så·¦å³
+tc class add dev $IN parent 1:1 classid 1:1$i htb rate 100kbit ceil 300kbit burst 15k
+tc qdisc add dev $IN parent 1:1$i handle 1$i: sfq
+tc filter add dev $IN parent 1:0 protocol ip prio $i handle $i fw classid 1:1$i
+iptables -t mangle -A PREROUTING -s 172.16.36.$i -j MARK --set-mark 0x$i
+done
 
-##vip Í¨µÀ£¬¸øÌØÊâip½Ï¸ßµÄÓÅÏÈ¼¶ºÍ½Ï´óµÄÏÂÔØËÙ¶È
-#tc filter add dev $DEV parent ffff: protocol ip prio 3 u32 match ip dst $VIP1 police rate 2000kbit burst 10k drop flowid :1
-#tc filter add dev $DEV parent ffff: protocol ip prio 3 u32 match ip dst $VIP2 police rate 2000kbit burst 10k drop flowid :1
-#(2).Èç¹ûÄÚ²¿ÍøÊý¾ÝÁ÷²»ÊÇºÜ·è¿ñµÄ»°,¾Í²»ÓÃ×öÏÂÔØµÄÏÞÖÆÁË,ÓÃ#·ûºÅÆÁ±ÎÉÏÃæÁ½ÐÐ¼´¿É.
-#(3).Èç¹ûÒª¶ÔÈÎºÎ½øÀ´Êý¾ÝµÄÊý¾Ý½øÐÐÏÞËÙµÄ»°,¿ÉÒÔÓÃÏÂÃæÕâ¾ä:
-#tc filter add dev $DEV parent ffff: protocol ip prio 10 u32 match ip src 0.0.0.0/0 police rate ${DOWNLINK}kbit burst 10k drop flowid :1
 }
-###############################################################################################
-#7. ¿ªÊ¼¸øÊý¾Ý°ü´ò±ê¼Ç£¬ÍùPREROUTINGÁ´ÖÐÌí¼Ómangle¹æÔò£º
-start_mangle() {
-               
-        echo -n "¿ªÊ¼¸øÊý¾Ý°ü´ò±ê¼Ç......start mangle mark......"
-iptables -F -t mangle
-iptables -X -t mangle
-iptables -Z -t mangle
-#(1)°Ñ³öÈ¥µÄ²»Í¬ÀàÊý¾Ý°ü(Îªdport)¸ømarkÉÏ±ê¼Ç1--6.ÈÃËü×ß²»Í¬µÄÍ¨µÀ
-#(2)°Ñ½øÀ´µÄÊý¾Ý°ü(Îªsport)¸ømarkÉÏ±ê¼Ç8,ÈÃËüÊÜµ½ÏÂÐÐµÄÏÞÖÆ,ÒÔÃâËÙ¶ÈÌ«¹ý¿ì¶øÓ°ÏìÈ«¾Ö.
-#(3)Ã¿Ìõ¹æÔòÏÂ¸ù×ÅreturnµÄÒâË¼ÊÇ¿ÉÒÔÍ¨¹ýRETURN·½·¨±ÜÃâ±éÀúËùÓÐµÄ¹æÔò,¼Ó¿ìÁË´¦ÀíËÙ¶È
-##ÉèÖÃvip
- 
-
-##ÉèÖÃTOSµÄ´¦Àí£º
-iptables -t mangle -A PREROUTING -m tos --tos Minimize-Delay -j MARK --set-mark 1
-iptables -t mangle -A PREROUTING -m tos --tos Minimize-Delay -j RETURN
-iptables -t mangle -A PREROUTING -m tos --tos Minimize-Cost -j MARK --set-mark 4
-iptables -t mangle -A PREROUTING -m tos --tos Minimize-Cost -j RETURN
-iptables -t mangle -A PREROUTING -m tos --tos Maximize-Throughput -j MARK --set-mark 5
-iptables -t mangle -A PREROUTING -m tos --tos Maximize-Throughput -j RETURN
-##Ìá¸ßtcp³õÊ¼Á¬½Ó(Ò²¾ÍÊÇ´øÓÐSYNµÄÊý¾Ý°ü)µÄÓÅÏÈÈ¨ÊÇ·Ç³£Ã÷ÖÇµÄ£º
-iptables -t mangle -A PREROUTING -p tcp -m tcp --tcp-flags SYN,RST,ACK SYN -j MARK --set-mark 1
-iptables -t mangle -A PREROUTING -p tcp -m tcp --tcp-flags SYN,RST,ACK SYN -j RETURN
-######icmp,ÏëpingÓÐÁ¼ºÃµÄ·´Ó¦,·ÅÔÚµÚÒ»Àà°É.
-iptables -t mangle -A PREROUTING -p icmp -j MARK --set-mark 1
-iptables -t mangle -A PREROUTING -p icmp -j RETURN
-# small packets (probably just ACKs)³¤¶ÈÐ¡ÓÚ64µÄÐ¡°üÍ¨³£ÊÇÐèÒª¿ìÐ©µÄ,Ò»°ãÊÇÓÃÀ´È·ÈÏtcpµÄÁ¬½ÓµÄ,
-#ÈÃËüÅÜ¿ìÐ©µÄÍ¨µÀ°É.Ò²¿ÉÒÔ°ÑÏÂÃæÁ½ÐÐÆÁ±Î,ÒòÎªÔÙÏÂÃæÓÐ¸ü¶à¸üÃ÷Ï¸µÄ¶Ë¿Ú·ÖÀà.
-#iptables -t mangle -A PREROUTING -p tcp -m length --length :64 -j MARK --set-mark 2
-#iptables -t mangle -A PREROUTING -p tcp -m length --length :64 -j RETURN
-#ftp·ÅµÚ2Àà,ÒòÎªÒ»°ãÊÇÐ¡°ü, ftp-data·ÅÔÚµÚ5Àà,ÒòÎªÒ»°ãÊÇ´óÁ¿Êý¾ÝµÄ´«ËÍ.
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport ftp -j MARK --set-mark 2
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport ftp -j RETURN
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport ftp-data -j MARK --set-mark 5
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport ftp-data -j RETURN
-iptables -t mangle -A PREROUTING -p tcp -m tcp --sport ftp -j MARK --set-mark 8
-iptables -t mangle -A PREROUTING -p tcp -m tcp --sport ftp -j RETURN
-iptables -t mangle -A PREROUTING -p tcp -m tcp --sport ftp-data -j MARK --set-mark 8
-iptables -t mangle -A PREROUTING -p tcp -m tcp --sport ftp-data -j RETURN
-##Ìá¸ßsshÊý¾Ý°üµÄÓÅÏÈÈ¨£º·ÅÔÚµÚ1Àà,ÒªÖªµÀsshÊÇ½»»¥Ê½µÄºÍÖØÒªµÄ,²»ÈÝ´ýÂýÅ¶
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 22 -j MARK --set-mark 1
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 22 -j RETURN
-#
-##smtpÓÊ¼þ£º·ÅÔÚµÚ4Àà,ÒòÎªÓÐÊ±ÓÐÈË·¢ËÍºÜ´óµÄÓÊ¼þ,Îª±ÜÃâËü¶ÂÈû,ÈÃËüÅÜ4µÀ°É
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 25 -j MARK --set-mark 4
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 25 -j RETURN
-#iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 25 -j MARK --set-mark 8
-#iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 25 -j RETURN
-## name-domain server£º·ÅÔÚµÚ1Àà,ÕâÑùÁ¬½Ó´øÓÐÓòÃûµÄÁ¬½Ó²ÅÄÜ¿ìËÙÕÒµ½¶ÔÓ¦µÄµØÖ·,Ìá¸ßËÙ¶ÈµÄÒ»·¨
-iptables -t mangle -A PREROUTING -p udp -m udp --dport 53 -j MARK --set-mark 1
-iptables -t mangle -A PREROUTING -p udp -m udp --dport 53 -j RETURN
-#
-## http£º·ÅÔÚµÚ3Àà,ÊÇ×î³£ÓÃµÄ,×î¶àÈËÓÃµÄ,
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 80 -j MARK --set-mark 3
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 80 -j RETURN
-iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 80 -j MARK --set-mark 8
-iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 80 -j RETURN
-##popÓÊ¼þ£º·ÅÔÚµÚ3Àà
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 110 -j MARK --set-mark 3
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 110 -j RETURN
-iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 110 -j MARK --set-mark 8
-iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 110 -j RETURN
-## https£º·ÅÔÚµÚ3Àà
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 443 -j MARK --set-mark 3
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 443 -j RETURN
-iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 443 -j MARK --set-mark 8
-iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 443 -j RETURN
-## Microsoft-SQL-Server£º·ÅÔÚµÚ2Àà,ÎÒÕâÀïÈÏÎª½ÏÖØÒª,Ò»¶¨Òª±£Ö¤ËÙ¶ÈµÄºÍÓÅÏÈµÄ.
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 1433 -j MARK --set-mark 2
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 1433 -j RETURN
-iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 1433 -j MARK --set-mark 8
-iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 1433 -j RETURN
-## voipÓÃ, Ìá¸ß,ÓïÒôÍ¨µÀÒª±£³Ö¸ßËÙ,²Å²»»á¶ÏÐø.
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 1720 -j MARK --set-mark 1
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 1720 -j RETURN
-iptables -t mangle -A PREROUTING -p udp -m udp --dport 1720 -j MARK --set-mark 1
-iptables -t mangle -A PREROUTING -p udp -m udp --dport 1720 -j RETURN
-## vpn ,ÓÃ×÷voipµÄ,Ò²Òª×ß¸ßËÙÂ·,²Å²»»á¶ÏÐø.
-iptables -t mangle -A PREROUTING -p udp -m udp --dport 1723 -j MARK --set-mark 1
-iptables -t mangle -A PREROUTING -p udp -m udp --dport 1723 -j RETURN
-## ·ÅÔÚµÚ1Àà,ÒòÎªÎÒ¾õµÃËüÔÚÎÒÐÄÖÐºÜÖØÒª,ÓÅÏÈ.
-#iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 7070 -j MARK --set-mark 1
-#iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 7070 -j RETURN
-## WWW caching service£º·ÅÔÚµÚ3Àà
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 8080 -j MARK --set-mark 3
-iptables -t mangle -A PREROUTING -p tcp -m tcp --dport 8080 -j RETURN
-iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 8080 -j MARK --set-mark 8
-iptables -t mangle -A PREROUTING -p tcp -m tcp --sport 8080 -j RETURN
-##Ìá¸ß±¾µØÊý¾Ý°üµÄÓÅÏÈÈ¨£º·ÅÔÚµÚ1
-iptables -t mangle -A OUTPUT -p tcp -m tcp --dport 22 -j MARK --set-mark 1
-iptables -t mangle -A OUTPUT -p tcp -m tcp --dport 22 -j RETURN
-iptables -t mangle -A OUTPUT -p icmp -j MARK --set-mark 1
-iptables -t mangle -A OUTPUT -p icmp -j RETURN
-#±¾µØsmall packets (probably just ACKs)
-iptables -t mangle -A OUTPUT -p tcp -m length --length :64 -j MARK --set-mark 2
-iptables -t mangle -A OUTPUT -p tcp -m length --length :64 -j RETURN
-#(4). ÏòPREROUTINGÖÐÌí¼ÓÍêmangle¹æÔòºó£¬ÓÃÕâÌõ¹æÔò½áÊøPREROUTING±í£º
-##Ò²¾ÍÊÇËµÇ°ÃæÃ»ÓÐ´ò¹ý±ê¼ÇµÄÊý¾Ý°ü½«½»¸ø1:24´¦Àí¡£
-##Êµ¼ÊÉÏÊÇ²»±ØÒªµÄ£¬ÒòÎª1:24ÊÇÈ±Ê¡Àà£¬µ«ÈÔÈ»´òÉÏ±ê¼ÇÊÇÎªÁË±£³ÖÕû¸öÉèÖÃµÄÐ­µ÷Ò»ÖÂ£¬¶øÇÒÕâÑù
-#»¹ÄÜ¿´µ½¹æÔòµÄ°ü¼ÆÊý¡£
-iptables -t mangle -A PREROUTING -i $DEV -j MARK --set-mark 6
-echo "±ê¼ÇÍê±Ï! mangle mark done!"
+stop(){
+echo -n "(åˆ é™¤æ‰€æœ‰é˜Ÿåˆ—......)"
+( tc qdisc del dev $DEV root &&
+for (( i=2; i<=253; i=i+1 ))
+do
+/sbin/iptables -t mangle -D PREROUTING -s 172.16.36.$i -j MARK --set-mark 0x$i
+done && echo "ok.åˆ é™¤æˆåŠŸ!" ) || echo "error."
 }
-#-----------------------------------------------------------------------------------------------------
-#8.È¡Ïûmangle±ê¼ÇÓÃµÄ×Ô¶¨Òåº¯Êý
-stop_mangle() {
-       
-        echo -n "Í£Ö¹Êý¾Ý±ê¼Ç stop mangle table......"
-        ( iptables -t mangle -F && echo "ok." ) || echo "error."
-}
-#9.È¡Ïû¶ÓÁÐÓÃµÄ       
-stop_routing() {
-        echo -n "(É¾³ýËùÓÐ¶ÓÁÐ......)"
-        ( tc qdisc del dev $DEV root && tc qdisc del dev $DEV ingress && echo "ok.É¾³ý³É¹¦!" ) || echo "error."
-}
-#10.ÏÔÊ¾×´Ì¬
+#æ˜¾ç¤ºçŠ¶æ€
 status() {
-        echo "1.show qdisc $DEV  (ÏÔÊ¾ÉÏÐÐ¶ÓÁÐ):----------------------------------------------"
-        tc -s qdisc show dev $DEV
-        echo "2.show class $DEV  (ÏÔÊ¾ÉÏÐÐ·ÖÀà):----------------------------------------------"
-        tc class show dev $DEV
-        echo "3. tc -s class show dev $DEV (ÏÔÊ¾ÉÏÐÐ¶ÓÁÐºÍ·ÖÀàÁ÷Á¿ÏêÏ¸ÐÅÏ¢):------------------"
-        tc -s class show dev $DEV
-        echo "3. tc -s filter ls dev $DEV (ÏÔÊ¾ÏÂÐÐ¶ÓÁÐºÍ·ÖÀàÁ÷Á¿ÏêÏ¸ÐÅÏ¢):------------------"
-        tc filter ls dev $DEV parent ffff:
-        echo "ËµÃ÷:ÉèÖÃ×Ü¶ÓÁÐÉÏÐÐ´ø¿í $UPLINK k."
-        echo "1. classid 1:11 ssh¡¢dns¡¢ºÍ´øÓÐSYN±ê¼ÇµÄÊý¾Ý°ü¡£ÕâÊÇ×î¸ßÓÅÏÈÈ¨µÄÀà°ü²¢×îÏÈÀà "
-        echo "2. classid 1:12 ÖØÒªÊý¾Ý,ÕâÊÇ½Ï¸ßÓÅÏÈÈ¨µÄÀà¡£"
-        echo "3. classid 1:21 web,pop ·þÎñ "
-        echo "4. classid 1:22 smtp·þÎñ "
-        echo "5. classid 1:23 ftp-data·þÎñ "
-        echo "6. classid 1:24 ÆäËû·þÎñ "
-        echo "7. classid 1:3 VIPÍ¨µÀ "
+echo "1.show qdisc $DEV  (æ˜¾ç¤ºä¸‹è¡Œé˜Ÿåˆ—):----------------------------------------------"
+tc -s qdisc show dev $DEV
+echo "2.show class $DEV  (æ˜¾ç¤ºä¸‹è¡Œåˆ†ç±»):----------------------------------------------"
+tc class show dev $DEV
+echo "3. tc -s class show dev $IN (æ˜¾ç¤ºä¸Šè¡Œé˜Ÿåˆ—å’Œåˆ†ç±»æµé‡è¯¦ç»†ä¿¡æ¯):------------------"
+tc -s class show dev $IN
+echo "è¯´æ˜Ž:è®¾ç½®æ€»é˜Ÿåˆ—ä¸‹è¡Œå’Œä¸Šè¡Œå¸¦å®½ 3M."
 }
-#11.ÏÔÊ¾°ïÖú
+#æ˜¾ç¤ºå¸®åŠ©
 usage() {
-        echo "Ê¹ÓÃ·½·¨(usage): `basename $0` [start | stop | restart | status | mangle ]"
-        echo "²ÎÊý×÷ÓÃ:"
-        echo "start   ¿ªÊ¼Á÷Á¿¿ØÖÆ"
-        echo "stop    Í£Ö¹Á÷Á¿¿ØÖÆ"
-        echo "restart ÖØÆôÁ÷Á¿¿ØÖÆ"
-        echo "status  ÏÔÊ¾¶ÓÁÐÁ÷Á¿"
-        echo "mangle  ÏÔÊ¾mark±ê¼Ç"
+echo "ä½¿ç”¨æ–¹æ³•(usage): `basename $0` [start | stop | restart | status ]"
+echo "å‚æ•°ä½œç”¨:"
+echo "start   å¼€å§‹æµé‡æŽ§åˆ¶"
+echo "stop    åœæ­¢æµé‡æŽ§åˆ¶"
+echo "restart é‡å¯æµé‡æŽ§åˆ¶"
+echo "status  æ˜¾ç¤ºé˜Ÿåˆ—æµé‡"
 }
-#----------------------------------------------------------------------------------------------
-#12. ÏÂÃæÊÇ½Å±¾ÔËÐÐ²ÎÊýµÄÑ¡ÔñµÄ¿ØÖÆ
-#
-#kernel=` kernelversion`
-kernel=`uname -r|cut -b 1-3`
-case "$kernel" in
-   2.2)
-      echo " (!) Error: won't do anything with 2.2.x ²»Ö§³ÖÄÚºË2.2.x"
-      exit 1
-      ;;
-     
-   2.4|2.6)
-      case "$1" in
-         start)
-            ( start_routing && start_mangle && echo "¿ªÊ¼Á÷Á¿¿ØÖÆ! TC started!" ) || echo "error."
-                       
-            exit 0
-            ;;
-         stop)
-            ( stop_routing && stop_mangle && echo "Í£Ö¹Á÷Á¿¿ØÖÆ! TC stopped!" ) || echo "error."
-           
-            exit 0
-            ;;
-         restart)
-            stop_routing
-            stop_mangle
-            start_routing
-            start_mangle
-           
-            echo "Á÷Á¿¿ØÖÆ¹æÔòÖØÐÂ×°ÔØ!"
-            ;;
-         status)
-            status
-            ;;
-           
-         mangle)
-            echo "iptables -t mangle -L (ÏÔÊ¾Ä¿Ç°mangle±í±í±ê¼ÇÏêÏ¸):"
-            iptables -t mangle -nL
-            ;;
-          
-         *) usage
-            exit 1
-            ;;
-      esac
-      ;;
-   *)
-      echo " (!) Error: Unknown kernel version.  check it !"
-      exit 1
-      ;;
-esac
-echo "script done!"
+case "$1" in
+start)
+( start && echo "å¼€å§‹æµé‡æŽ§åˆ¶! TC started!" ) || echo "error."
+exit 0
+;;
+
+stop)
+( stop && echo "åœæ­¢æµé‡æŽ§åˆ¶! TC stopped!" ) || echo "error."
+exit 0
+;;
+restart)
+stop
+start
+echo "æµé‡æŽ§åˆ¶è§„åˆ™é‡æ–°è£…è½½!"
+;;
+status)
+status
+;;
+
+*) usage
 exit 1
+;;
+esac
