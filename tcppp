@@ -1,6 +1,6 @@
 #!/bin/bash
-DEV="eth1"
-UPLINK=2048
+DEV="eth0"
+UPLINK=3200
 #下行downlink 3200 k 大概一半左右,以便能够得到更多的并发连接
 DOWNLINK=12288
 VIP1="192.168.1.159/32"
