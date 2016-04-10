@@ -1,0 +1,95 @@
+#!/bin/bash
+# Set the following values to somewhat less than your actual download
+# and uplink speed. In kilobits. Also set the device that is to be shaped.
+#INGOING traffic (gateway)
+IN=eth0
+#what ip do you want to limit
+INET="172.16.36"
+IPS="11"
+IPE="50"
+#Total DOWNLINK
+DOWN="100mbit"
+#ensure rate speed of DOWNLINK
+DOWNLOADrate="100kbit"
+#Allow max rate speed of DOWNLINK
+DOWNLOADceil="250kbit"
+start(){
+    #clean eth1 eth0 existing down- and uplink qdiscs, hide errors
+    /sbin/tc qdisc del dev $IN root 2>/dev/null
+    # install root htb of downlink and uplink
+    # main class
+    /sbin/tc qdisc add dev $IN root handle 1: htb
+    /sbin/tc class add dev $IN parent 1: classid 1:1 htb rate $DOWN ceil $DOWN
+    #simgle ip limit
+    /sbin/tc class add dev $IN parent 1:1 classid 1:2 htb rate $DOWNLOADrate ceil $DOWNLOADrate
+    /sbin/tc qdisc add dev $IN parent 1:2 sfq perturb 2
+    /sbin/tc filter add dev $IN protocol ip parent 1: prio 49 u32 match ip dst 192.168.138.10 flowid 1:2
+    /sbin/tc filter add dev $IN protocol ip parent 1: prio 49 u32 match ip dst 192.168.2.0/32 flowid 1:2
+    #net1 limit
+    for (( i=$IPS; i<=$IPE; i=i+1 ))
+    do 
+        #####Control DOWNLINK
+        /sbin/tc class add dev $IN parent 1:1 classid 1:1$i htb rate $DOWNLOADrate ceil $DOWNLOADceil
+        /sbin/tc qdisc add dev $IN parent 1:1$i sfq perturb 1$i
+        /sbin/tc filter add dev $IN protocol ip parent 1: prio 50 u32 match ip dst $INET$i flowid 1:1$i
+    done
+    #net2 limit
+    #for (( i=$IPS; i<=$IPE; i=i+1 ))
+    #do
+    # #####Control DOWNLINK
+    # /sbin/tc class add dev $IN parent 1:1 classid 1:2$i htb rate $DOWNLOADrate ceil $DOWNLOADceil
+    # /sbin/tc qdisc add dev $IN parent 1:2$i sfq perturb 2$i
+    # /sbin/tc filter add dev $IN protocol ip parent 1: prio 50 u32 match ip dst $INET$i flowid 1:2$i
+    #done
+    #Other traffic
+    /sbin/tc filter add dev $IN protocol ip parent 1: prio 2 u32 match ip dst 0.0.0.0/32 flowid 1:1
+}
+stop(){
+    echo -n "(Delete all qdisc......)"
+    (/sbin/tc qdisc del dev $IN root 2>/dev/null && echo "ok.Delete sucessfully!") || echo "error."
+}
+#show status
+status() {
+    echo "1.show qdisc $IN:----------------------------------------------"
+    /sbin/tc -s qdisc show dev $IN
+    echo "2.show class $IN:----------------------------------------------"
+    N1=`/sbin/tc class show dev $IN | wc -l`
+    if [ $N1 == 0 ];then
+        echo "NULL, OFF Limiting "
+    else
+        /sbin/tc -s class show dev $IN
+        echo "It work"
+    fi
+}
+#show help
+usage() {
+    echo "(usage): `basename $0` [start | stop | restart | status ]"
+    echo "help:"
+    echo "start -- TC Flow Control start"
+    echo "stop -- TC Flow Control stop"
+    echo "restart -- TC Flow Control restart"
+    echo "status -- TC Show all TC Qdisc and class"
+}
+case "$1" in
+    start)
+        ( start && echo "Flow Control! TC started!" ) || echo "error."
+        exit 0
+        ;;
+
+    stop)
+        ( stop && echo "Flow Control TC stopped!" ) || echo "error."
+        exit 0
+        ;;
+    restart)
+        stop
+        start
+        echo "Flow Control restart"
+        ;;
+    status)
+        status
+        ;;
+
+    *) usage
+        exit 1
+        ;;
+esac
