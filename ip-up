@@ -1,95 +1,71 @@
 #!/bin/bash
-# Set the following values to somewhat less than your actual download
-# and uplink speed. In kilobits. Also set the device that is to be shaped.
-#INGOING traffic (gateway)
+##给192.168.13网段的IP做限速
+##外网网卡
 IN=eth0
-#what ip do you want to limit
-INET="172.16.36"
-IPS="11"
-IPE="50"
-#Total DOWNLINK
-DOWN="100mbit"
-#ensure rate speed of DOWNLINK
-DOWNLOADrate="100kbit"
-#Allow max rate speed of DOWNLINK
-DOWNLOADceil="250kbit"
-start(){
-    #clean eth1 eth0 existing down- and uplink qdiscs, hide errors
-    /sbin/tc qdisc del dev $IN root 2>/dev/null
-    # install root htb of downlink and uplink
-    # main class
-    /sbin/tc qdisc add dev $IN root handle 1: htb
-    /sbin/tc class add dev $IN parent 1: classid 1:1 htb rate $DOWN ceil $DOWN
-    #simgle ip limit
-    /sbin/tc class add dev $IN parent 1:1 classid 1:2 htb rate $DOWNLOADrate ceil $DOWNLOADrate
-    /sbin/tc qdisc add dev $IN parent 1:2 sfq perturb 2
-    /sbin/tc filter add dev $IN protocol ip parent 1: prio 49 u32 match ip dst 172.16.36.11 flowid 1:2
-    /sbin/tc filter add dev $IN protocol ip parent 1: prio 49 u32 match ip dst 172.16.36.0/24 flowid 1:2
-    #net1 limit
-    for (( i=$IPS; i<=$IPE; i=i+1 ))
-    do 
-        #####Control DOWNLINK
-        /sbin/tc class add dev $IN parent 1:1 classid 1:1$i htb rate $DOWNLOADrate ceil $DOWNLOADceil
-        /sbin/tc qdisc add dev $IN parent 1:1$i sfq perturb 1$i
-        /sbin/tc filter add dev $IN protocol ip parent 1: prio 50 u32 match ip dst $INET.$i flowid 1:1$i
-    done
-    #net2 limit
-    #for (( i=$IPS; i<=$IPE; i=i+1 ))
-    #do
-    # #####Control DOWNLINK
-    # /sbin/tc class add dev $IN parent 1:1 classid 1:2$i htb rate $DOWNLOADrate ceil $DOWNLOADceil
-    # /sbin/tc qdisc add dev $IN parent 1:2$i sfq perturb 2$i
-    # /sbin/tc filter add dev $IN protocol ip parent 1: prio 50 u32 match ip dst $INET$i flowid 1:2$i
-    #done
-    #Other traffic
-    /sbin/tc filter add dev $IN protocol ip parent 1: prio 2 u32 match ip dst 0.0.0.0/32 flowid 1:1
+##内网网卡
+DEV=eth0  
+start() {
+## 清除 eth1 eth0 所有队列规则
+tc qdisc del dev $DEV root 2>/dev/null
+tc qdisc del dev $IN  root 2>/dev/null
+##定义总的上下带宽
+tc qdisc add dev $DEV root handle 2: htb
+tc class add dev $DEV parent 2: classid 2:1 htb rate 3000kbit
+tc qdisc add dev $IN root handle 1: htb
+tc class add dev $IN parent 1: classid 1:1  htb rate 3000kbit
+for (( i=2; i<=253; i=i+1 ))
+do
+#####下载控制在每人实际最大100k/S左右
+tc class add dev $DEV parent 2:1 classid 2:2$i htb rate 100kbit ceil 500kbit burst 15k
+tc qdisc add dev $DEV parent 2:2$i handle 2$i: sfq
+tc filter add dev $DEV parent 2:0 protocol ip prio 4 u32 match ip dst 192.168.13.$i flowid 2:2$i
+done
 }
 stop(){
-    echo -n "(Delete all qdisc......)"
-    (/sbin/tc qdisc del dev $IN root 2>/dev/null && echo "ok.Delete sucessfully!") || echo "error."
+echo -n "(删除所有队列......)"
+( tc qdisc del dev $DEV root &&
+for (( i=2; i<=253; i=i+1 ))
+do
+/sbin/iptables -t mangle -D PREROUTING -s 192.168.13.$i -j MARK --set-mark 0x$i
+done && echo "ok.删除成功!" ) || echo "error."
 }
-#show status
+#显示状态
 status() {
-    echo "1.show qdisc $IN:----------------------------------------------"
-    /sbin/tc -s qdisc show dev $IN
-    echo "2.show class $IN:----------------------------------------------"
-    N1=`/sbin/tc class show dev $IN | wc -l`
-    if [ $N1 == 0 ];then
-        echo "NULL, OFF Limiting "
-    else
-        /sbin/tc -s class show dev $IN
-        echo "It work"
-    fi
+echo "1.show qdisc $DEV  (显示下行队列):----------------------------------------------"
+tc -s qdisc show dev $DEV
+echo "2.show class $DEV  (显示下行分类):----------------------------------------------"
+tc class show dev $DEV
+echo "3. tc -s class show dev $IN (显示上行队列和分类流量详细信息):------------------"
+tc -s class show dev $IN
+echo "说明:设置总队列下行和上行带宽 3M."
 }
-#show help
+#显示帮助
 usage() {
-    echo "(usage): `basename $0` [start | stop | restart | status ]"
-    echo "help:"
-    echo "start -- TC Flow Control start"
-    echo "stop -- TC Flow Control stop"
-    echo "restart -- TC Flow Control restart"
-    echo "status -- TC Show all TC Qdisc and class"
+echo "使用方法(usage): `basename $0` [start | stop | restart | status ]"
+echo "参数作用:"
+echo "start   开始流量控制"
+echo "stop    停止流量控制"
+echo "restart 重启流量控制"
+echo "status  显示队列流量"
 }
 case "$1" in
-    start)
-        ( start && echo "Flow Control! TC started!" ) || echo "error."
-        exit 0
-        ;;
-
-    stop)
-        ( stop && echo "Flow Control TC stopped!" ) || echo "error."
-        exit 0
-        ;;
-    restart)
-        stop
-        start
-        echo "Flow Control restart"
-        ;;
-    status)
-        status
-        ;;
-
-    *) usage
-        exit 1
-        ;;
+start)
+( start && echo "开始流量控制! TC started!" ) || echo "error."
+exit 0
+;;
+stop)
+( stop && echo "停止流量控制! TC stopped!" ) || echo "error."
+exit 0
+;;
+restart)
+stop
+start
+echo "流量控制规则重新装载!"
+;;
+status)
+status
+;;
+*) usage
+exit 1
+;;
 esac
