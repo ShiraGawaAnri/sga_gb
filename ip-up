@@ -23,15 +23,15 @@ start(){
     #simgle ip limit
     /sbin/tc class add dev $IN parent 1:1 classid 1:2 htb rate $DOWNLOADrate ceil $DOWNLOADrate
     /sbin/tc qdisc add dev $IN parent 1:2 sfq perturb 2
-    /sbin/tc filter add dev $IN protocol ip parent 1: prio 49 u32 match ip dst 192.168.138.10 flowid 1:2
-    /sbin/tc filter add dev $IN protocol ip parent 1: prio 49 u32 match ip dst 192.168.2.0/32 flowid 1:2
+    /sbin/tc filter add dev $IN protocol ip parent 1: prio 49 u32 match ip dst 172.16.36.11 flowid 1:2
+    /sbin/tc filter add dev $IN protocol ip parent 1: prio 49 u32 match ip dst 172.16.36.0/24 flowid 1:2
     #net1 limit
     for (( i=$IPS; i<=$IPE; i=i+1 ))
     do 
         #####Control DOWNLINK
         /sbin/tc class add dev $IN parent 1:1 classid 1:1$i htb rate $DOWNLOADrate ceil $DOWNLOADceil
         /sbin/tc qdisc add dev $IN parent 1:1$i sfq perturb 1$i
-        /sbin/tc filter add dev $IN protocol ip parent 1: prio 50 u32 match ip dst $INET$i flowid 1:1$i
+        /sbin/tc filter add dev $IN protocol ip parent 1: prio 50 u32 match ip dst $INET.$i flowid 1:1$i
     done
     #net2 limit
     #for (( i=$IPS; i<=$IPE; i=i+1 ))
