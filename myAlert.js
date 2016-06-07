@@ -6,7 +6,7 @@
 	}
 }
 alert_pre_input();//插入页面的alert函数劫持
-console.log("quick");
+alert("消息消息消息");
 function notifyMe(message,flag) {
 	var rand = (function(){
 	var today = new Date(); 
