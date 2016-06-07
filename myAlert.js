@@ -2,7 +2,8 @@
 	var _alert = window.alert;
 	window.alert = function(msg) {
 		console.log("页面有 alert消息 : ",msg);
-		notifyMe(msg,1);
+		notifyMe(msg+"  3秒后重新加载",1);
+		setTimeout(function(){location.reload();},3000);
 	}
 }
 notifyMe("",-1);
