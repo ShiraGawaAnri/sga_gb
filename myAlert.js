@@ -1,12 +1,12 @@
 function alert_pre_input(){
 	var _alert = window.alert;
 	window.alert = function(msg) {
-		console.log(msg);
+		console.log("有alert消息 : ",msg);
 		notifyMe(1,msg);
 	}
 }
 alert_pre_input();//插入页面的alert函数劫持
-
+console.log("quick");
 function notifyMe(message,flag) {
 	var rand = (function(){
 	var today = new Date(); 
