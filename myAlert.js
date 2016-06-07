@@ -2,10 +2,10 @@
 	var _alert = window.alert;
 	window.alert = function(msg) {
 		console.log("页面有 alert消息 : ",msg);
-		notifyMe(1,msg);
+		notifyMe(msg,1);
 	}
 }
-notifyMe(-1,"");
+notifyMe("",-1);
 alert_pre_input();//插入页面的alert函数劫持
 //alert("消息消息消息");
 function notifyMe(message,flag) {
