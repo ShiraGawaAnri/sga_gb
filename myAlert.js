@@ -1,11 +1,11 @@
-function alert_pre_input(){
+ï»¿function alert_pre_input(){
 	var _alert = window.alert;
 	window.alert = function(msg) {
-		console.log("ÓĞalertÏûÏ¢ : ",msg);
+		console.log("æœ‰alertæ¶ˆæ¯ : ",msg);
 		notifyMe(1,msg);
 	}
 }
-alert_pre_input();//²åÈëÒ³ÃæµÄalertº¯Êı½Ù³Ö
+alert_pre_input();//æ’å…¥é¡µé¢çš„alertå‡½æ•°åŠ«æŒ
 console.log("quick");
 function notifyMe(message,flag) {
 	var rand = (function(){
@@ -27,7 +27,7 @@ function notifyMe(message,flag) {
 	var src_url = "http://shiragawaanri.github.io/sga_gb/";
 	var part_icon_url = random_icon[get_rand-1];
 	var icon_url = src_url+part_icon_url;
-	  var title = "¡«±ÌÀ¶»ÃÏëÓĞĞÂÏûÏ¢¡«";
+	  var title = "ï½ç¢§è“å¹»æƒ³æœ‰æ–°æ¶ˆæ¯ï½";
 	  var options = {
       body: message,
       tag: "anri_shiragawa",
@@ -35,13 +35,13 @@ function notifyMe(message,flag) {
 
   };
   if (!("Notification" in window)) {
-  	return false;//ä¯ÀÀÆ÷²»Ö§³Ö
+  	return false;//æµè§ˆå™¨ä¸æ”¯æŒ
   }
-  //flag -1:¼ì²â 0:Í¨³£ÏûÏ¢ 1:ÑéÖ¤Âë,¸üĞÂ/Í¨Ñ¶²»Á¼alert
+  //flag -1:æ£€æµ‹ 0:é€šå¸¸æ¶ˆæ¯ 1:éªŒè¯ç ,æ›´æ–°/é€šè®¯ä¸è‰¯alert
   if(flag == -1 && Notification.permission !== "granted"){
 	Notification.requestPermission(function (permission) {
 			if (permission === "granted") {
-				options = {body:"ÒÑ¿ªÆô×ÀÃæÍ¨Öª",tag:"granted-just-one",icon:icon_url}
+				options = {body:"å·²å¼€å¯æ¡Œé¢é€šçŸ¥",tag:"granted-just-one",icon:icon_url}
 				var notification = new Notification(title, options);
 				notification.onshow = function() {
 					setTimeout(function() {
