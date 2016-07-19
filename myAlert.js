@@ -21,23 +21,33 @@ function updateCK(){
 		scriptCharset:'utf-8',
        });
 	var newVerSion = verSionText.responseText;
-	var mydate = new Date();
-	var nowsec = mydate.getTime()/1000;
-	if(localVerSion != newVerSion){
-		if(localStorage["updataNotifySec"] == "" || localStorage["updataNotifySec"] == undefined){
-			localStorage["updataNotifySec"] = Number(nowsec); 
-			notifyMe("---有新版本: ver "+newVerSion+"可更新---提示间隔：12小时",1);
-		}else{
-			if((nowsec - Number(localStorage["updataNotifySec"]))>(3600*12)){
+	if(verSionText.responseText != undefined){
+		var mydate = new Date();
+		var nowsec = mydate.getTime()/1000;
+		if(localVerSion != newVerSion){
+			if(localStorage["updataNotifySec"] == "" || localStorage["updataNotifySec"] == undefined){
 				localStorage["updataNotifySec"] = Number(nowsec); 
 				notifyMe("---有新版本: ver "+newVerSion+"可更新---提示间隔：12小时",1);
+				var audioEle =$("#p_audio_capter")[0];
+				if (audioEle) audioEle.play();
+			}else{
+				if((nowsec - Number(localStorage["updataNotifySec"]))>(3600*12)){
+					localStorage["updataNotifySec"] = Number(nowsec); 
+					notifyMe("---有新版本: ver "+newVerSion+"可更新---提示间隔：12小时",1);
+					var audioEle =$("#p_audio_capter")[0];
+					if (audioEle) audioEle.play();
+				}
 			}
 		}
-	}
+	return true;
+	}else return false;
 }
-
-updateCK();
-
+var ckFun = false;
+ckFun = updateCK();
+var timer3=setInterval( ckFun = updateCK(),180*1000);
+if (ckFun == true ){
+	clearInterval(timer3);
+}
 
 
 
