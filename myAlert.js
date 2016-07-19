@@ -9,6 +9,38 @@
 notifyMe("",-1);
 alert_pre_input();//插入页面的alert函数劫持
 //alert("消息消息消息");
+
+var localVerSion = "0.6.15"
+//更新通知脚本(测试)
+function updateCK(){
+	var verSionText = $.ajax({
+        type: 'GET',
+        url:'http://shiragawaanri.github.io/sga_gb/version.txt',
+        async:false,
+        dataType:'text',
+		scriptCharset:'utf-8',
+       });
+	var newVerSion = verSionText.responseText;
+	var mydate = new Date();
+	var nowsec = mydate.getTime()/1000;
+	if(localVerSion != newVerSion){
+		if(localStorage["updataNotifySec"] == "" || localStorage["updataNotifySec"] == undefined){
+			localStorage["updataNotifySec"] = Number(nowsec); 
+			notifyMe("---有新版本: ver "+newVerSion+"可更新---提示间隔：12小时",1);
+		}else{
+			if((nowsec - Number(localStorage["updataNotifySec"]))>(3600*12)){
+				localStorage["updataNotifySec"] = Number(nowsec); 
+				notifyMe("---有新版本: ver "+newVerSion+"可更新---提示间隔：12小时",1);
+			}
+		}
+	}
+}
+
+updateCK();
+
+
+
+
 function notifyMe(message,flag) {
 	var rand = (function(){
 	var today = new Date(); 

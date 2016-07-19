@@ -60,7 +60,7 @@ function notifyMe(message,flag) {
 				notification.onshow = function() {
 				setTimeout(function() {
 				notification.close();
-                },30000);
+                },10000);
 				}
 			}else if (flag == 0){
 				var notification = new Notification(title, options);
@@ -75,11 +75,11 @@ function notifyMe(message,flag) {
 function getFpsCrack(){
 	var _getFps = createjs.Ticker.getFPS;
 	createjs.Ticker.getFPS = function() {
-		notifyMe("侦查到反外挂检测FPS,尝试绕过",1);
+		//notifyMe("侦查到反外挂检测FPS,尝试绕过",1);
 		return 24;
 	}
 	createjs.Ticker.getFPS() = function(){
-		notifyMe("侦查到反外挂检测FPS,尝试绕过",1);
+		//notifyMe("侦查到反外挂检测FPS,尝试绕过",1);
 		return 24;
 	}
 }
