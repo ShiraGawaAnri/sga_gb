@@ -78,4 +78,8 @@ function getFpsCrack(){
 		notifyMe("侦查到反外挂检测FPS,尝试绕过",1);
 		return 24;
 	}
+	createjs.Ticker.getFPS() = function(){
+		notifyMe("侦查到反外挂检测FPS,尝试绕过",1);
+		return 24;
+	}
 }
