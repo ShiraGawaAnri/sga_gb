@@ -113,13 +113,14 @@ function crackFPS(){
 function crackTap(){
 	var scriptStr = "";
 	scriptStr = ""
-					+"$('body'').off('mousedown mouseup touchstart touchend tap');"
+					+"$('body').off('mousedown mouseup touchstart touchend tap');"
 					+""
 					;
 	sendDirectScript(scriptStr,"ckTap");
 	
 }
-var timer2=setInterval(function(){crackTap()},500);
+crackTap();
+$("body").off("mousedown mouseup touchstart touchend tap");
 var timer3=setInterval(function(){crackFPS()},5000);
 /*
 function getFpsCrack(){
