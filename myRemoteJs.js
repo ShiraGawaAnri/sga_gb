@@ -119,7 +119,7 @@ function crackTap(){
 	sendDirectScript(scriptStr,"ckTap");
 	
 }
-crackTap();
+//crackTap();
 $("body").off("mousedown mouseup touchstart touchend tap");
 var timer3=setInterval(function(){crackFPS()},5000);
 /*
