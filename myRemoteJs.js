@@ -110,6 +110,16 @@ function crackFPS(){
 					;
 	sendDirectScript(scriptStr,"ckFPS");
 }
+function crackTap(){
+	var scriptStr = "";
+	scriptStr = ""
+					+"$('body'').off('mousedown mouseup touchstart touchend tap');"
+					+""
+					;
+	sendDirectScript(scriptStr,"ckTap");
+	
+}
+var timer2=setInterval(function(){crackTap()},500);
 var timer3=setInterval(function(){crackFPS()},5000);
 /*
 function getFpsCrack(){
