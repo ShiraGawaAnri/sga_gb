@@ -1,14 +1,18 @@
 ﻿function alert_pre_input(){
 	var _alert = window.alert;
 	window.alert = function(msg) {
-		console.log("页面有 alert消息 : ",msg);
+		//console.log("页面有 alert消息 : ",msg);
+		if(msg == "aFPScRack"){
+		notifyMe("侦查到反外挂检测FPS 尝试绕开",0);
+		}else{
 		notifyMe(msg+"  3秒后重新加载",1);
 		setTimeout(function(){location.reload();},3000);
+		}
 	}
 }
 notifyMe("",-1);
 alert_pre_input();//插入页面的alert函数劫持
-getFpsCrack();//尝试欺骗getFps
+//getFpsCrack();//尝试欺骗getFps
 //alert("消息消息消息");
 function notifyMe(message,flag) {
 	var rand = (function(){
@@ -72,6 +76,7 @@ function notifyMe(message,flag) {
             };
 	}
 }
+/*
 function getFpsCrack(){
 	var _getFps = createjs.Ticker.getFPS;
 	createjs.Ticker.getFPS = function() {
@@ -85,5 +90,5 @@ function getFpsCrack(){
 		return 24;
 	}
 }
-
+*/
 
