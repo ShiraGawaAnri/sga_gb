@@ -102,19 +102,7 @@ function sendDirectScript(scriptStr,id) {
 	}
 	$('#'+id).html(scriptStr);
 }
-function sendDirectScript2(scriptStr,id) {
-	var script_id = document.getElementById(id);
-            if (script_id) {
-                //document.getElementsByTagName('head')[0].removeChild(script_id);
-                $('#'+id).remove();
-            }
-	if ($('#'+id).size() == 0) {
-		$("<script>")
-			.attr("id",id)
-			.appendTo("body");
-	}
-	$('#'+id).html(scriptStr);
-}
+
 function crackFPS(){
 	var scriptStr = "";
 	scriptStr = ""
@@ -123,17 +111,6 @@ function crackFPS(){
 					;
 	sendDirectScript(scriptStr,"ckFPS");
 }
-function crackTap(){
-	var scriptStr = "";
-	scriptStr = ""
-					+"$('body').off('mousedown mouseup touchstart touchend tap')"
-					+""
-					;
-	sendDirectScript2(scriptStr,"ckTap");
-	
-}
-crackTap();
-$("body").off("mousedown mouseup touchstart touchend tap");
 var timer3=setInterval(function(){crackFPS()},5000);
 /*
 function getFpsCrack(){
