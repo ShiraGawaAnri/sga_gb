@@ -75,11 +75,15 @@ function notifyMe(message,flag) {
 function getFpsCrack(){
 	var _getFps = createjs.Ticker.getFPS;
 	createjs.Ticker.getFPS = function() {
+		console.log("侦查到检测FPS-status 1")
 		//notifyMe("侦查到反外挂检测FPS,尝试绕过",1);
 		return 24;
 	}
 	createjs.Ticker.getFPS() = function(){
+		console.log("侦查到检测FPS-status 2")
 		//notifyMe("侦查到反外挂检测FPS,尝试绕过",1);
 		return 24;
 	}
 }
+
+
