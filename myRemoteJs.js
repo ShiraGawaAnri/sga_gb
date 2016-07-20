@@ -126,7 +126,7 @@ function crackFPS(){
 function crackTap(){
 	var scriptStr = "";
 	scriptStr = ""
-					+'$("body").off("mousedown mouseup touchstart touchend tap");'
+					+"$('body').off('mousedown mouseup touchstart touchend tap')"
 					+""
 					;
 	sendDirectScript2(scriptStr,"ckTap");
