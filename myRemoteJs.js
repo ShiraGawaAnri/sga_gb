@@ -146,7 +146,7 @@ function crackTapOnload(){
 					+"alert('cRaCkTap');"
 					+""
 					;
-	sendDirectScript2(scriptStr,"ckTap");
+	sendDirectScript2(scriptStr,"ckTapOnload");
 }
 crackTap();
 crackTapOnload();
