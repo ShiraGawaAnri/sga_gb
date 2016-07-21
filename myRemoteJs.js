@@ -130,8 +130,11 @@ function crackTap(){
 	var scriptStr = "";
 	scriptStr = ""
 					+"$(function(){"
-					+"setTimeout(function(){$('body').off('mousedown mouseup touchstart touchend tap');},5000)"
+					+"setTimeout(function(){$('body').off('mousedown mouseup touchstart touchend tap');},5000);"
 					+"});"
+					+"window.onload=function(){"
+					+"$('body').off('mousedown mouseup touchstart touchend tap');"
+					+"};"
 					+"alert('cRaCkTap');"
 					+""
 					;
