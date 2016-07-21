@@ -90,9 +90,9 @@ $.ajaxPrefilter( function(options, originalOptions, jqXHR){
     // options对象 包括accepts、crossDomain、contentType、url、async、type、headers、error、dataType等许多参数选项
     // originalOptions对象 就是你为$.ajax()方法传递的参数对象，也就是 { url: "/index.php" }
     // jqXHR对象 就是经过jQuery封装的XMLHttpRequest对象(保留了其本身的属性和方法)
-	console.log("t1",option.url)
-	console.log("t2",orginalOptions.url)
-	console.log("t3",jqXHR.url)
+	//console.log("t1",option.url)
+	//console.log("t2",orginalOptions.url)
+	//console.log("t3",jqXHR.url)
     //options.type = "GET"; // 将请求方式改为GET
     //options.headers = { }; // 清空自定义的请求头
 });
