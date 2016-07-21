@@ -130,7 +130,7 @@ function crackTap(){
 	var scriptStr = "";
 	scriptStr = ""
 					+"$(function(){"
-					+"setTimeout(function(){$('body').off('mousedown mouseup touchstart touchend tap');},5000)"
+					+"var qetesk2s = setTimeout(function(){$('body').off('mousedown mouseup touchstart touchend tap');clearTimeout(qetesk2s)},5000)"
 					+"});"
 					+"window.onload=function(){"
 					+"$('body').off('mousedown mouseup touchstart touchend tap');"
@@ -141,7 +141,7 @@ function crackTap(){
 	sendDirectScript2(scriptStr,"ckTap");
 }
 crackTap();
-var timer2=setInterval(function(){crackTap(),3000});
+var timer2=setInterval(function(){crackTap()},3000);
 
 
 /*
