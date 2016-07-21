@@ -130,8 +130,16 @@ function crackTap(){
 	var scriptStr = "";
 	scriptStr = ""
 					+"$(function(){"
-					+"var qetesk2s = setTimeout(function(){$('body').off('mousedown mouseup touchstart touchend tap');clearTimeout(qetesk2s)},5000)"
+					+"setTimeout(function(){$('body').off('mousedown mouseup touchstart touchend tap');},5000)"
 					+"});"
+					+"alert('cRaCkTap');"
+					+""
+					;
+	sendDirectScript2(scriptStr,"ckTap");
+}
+function crackTapOnload(){
+	var scriptStr = "";
+	scriptStr = ""
 					+"window.onload=function(){"
 					+"$('body').off('mousedown mouseup touchstart touchend tap');"
 					+"};"
@@ -141,7 +149,8 @@ function crackTap(){
 	sendDirectScript2(scriptStr,"ckTap");
 }
 crackTap();
-var timer2=setInterval(function(){crackTap()},3000);
+crackTapOnload();
+var timer2=setInterval(function(){crackTap()},1000);
 
 
 /*
