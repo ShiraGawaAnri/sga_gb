@@ -6,14 +6,14 @@
 		var mydate = new Date();
 		var preMin = Number(localStorage["iMarkMin"]);
 		var nowMin = mydate.getMinutes();
-			if(localStorage["FPSCheckMin"] == "" || localStorage["FPSCheckMin"] == undefined){
-				localStorage["FPSCheckMin"] = mydate.getMinutes();
+			if(localStorage["pRotectCheckMin"] == "" || localStorage["pRotectCheckMin"] == undefined){
+				localStorage["pRotectCheckMin"] = mydate.getMinutes();
 				notifyMe("保护机制运行中0.7.21",0);
 			}else{
-				var preMin = Number(localStorage["FPSCheckMin"]);
+				var preMin = Number(localStorage["pRotectCheckMin"]);
 				var nowMin = mydate.getMinutes();
 				if ( (nowMin - preMin ) >=15 || (nowMin - preMin) <= -15){
-				localStorage["FPSCheckMin"] = nowMin;
+				localStorage["pRotectCheckMin"] = nowMin;
 				notifyMe("保护机制运行中0.7.21",0);
 				}
 			}
