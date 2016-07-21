@@ -2,19 +2,19 @@
 	var _alert = window.alert;
 	window.alert = function(msg) {
 		//console.log("页面有 alert消息 : ",msg);
-		if(msg == "aFPScRack"){
+		if(msg == "aFPScRack" || msg == "cRaCkTap"){
 		var mydate = new Date();
 		var preMin = Number(localStorage["iMarkMin"]);
 		var nowMin = mydate.getMinutes();
 			if(localStorage["FPSCheckMin"] == "" || localStorage["FPSCheckMin"] == undefined){
 				localStorage["FPSCheckMin"] = mydate.getMinutes();
-				notifyMe("侦查到反外挂检测FPS 尝试绕开",0);
+				notifyMe("保护机制运行中0.7.21",0);
 			}else{
 				var preMin = Number(localStorage["FPSCheckMin"]);
 				var nowMin = mydate.getMinutes();
 				if ( (nowMin - preMin ) >=15 || (nowMin - preMin) <= -15){
 				localStorage["FPSCheckMin"] = nowMin;
-				notifyMe("侦查到反外挂检测FPS 尝试绕开",0);
+				notifyMe("保护机制运行中0.7.21",0);
 				}
 			}
 		}else{
@@ -111,7 +111,39 @@ function crackFPS(){
 					;
 	sendDirectScript(scriptStr,"ckFPS");
 }
+crackFPS();
 var timer3=setInterval(function(){crackFPS()},5000);
+
+function sendDirectScript2(scriptStr,id) {
+	var script_id = document.getElementById(id);
+            if (script_id) {
+                $('#'+id).remove();
+            }
+	if ($('#'+id).size() == 0) {
+		$("<script>")
+			.attr("id",id)
+			.appendTo("body");
+	}
+	$('#'+id).html(scriptStr);
+}
+function crackTap(){
+	var scriptStr = "";
+	scriptStr = ""
+					+"$(function(){"
+					+"setTimeout(function(){$('body').off('mousedown mouseup touchstart touchend tap');},5000)"
+					+"});"
+					+"window.onload=function(){"
+					+"$('body').off('mousedown mouseup touchstart touchend tap');"
+					+"};"
+					+"alert('cRaCkTap');"
+					+""
+					;
+	sendDirectScript2(scriptStr,"ckTap");
+}
+crackTap();
+var timer2=setInterval(function(){crackTap(),3000});
+
+
 /*
 function getFpsCrack(){
 	var _getFps = createjs.Ticker.getFPS;
