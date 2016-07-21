@@ -140,20 +140,8 @@ function crackTap(){
 					;
 	sendDirectScript2(scriptStr,"ckTap");
 }
-function crackTapOnload(){
-	var scriptStr = "";
-	scriptStr = ""
-					+"window.onload=function(){"
-					+"$('body').off('mousedown mouseup touchstart touchend tap');"
-					+"};"
-					+"alert('cRaCkTap');"
-					+""
-					;
-	sendDirectScript2(scriptStr,"ckTapOnload");
-}
 crackTap();
-crackTapOnload();
-var timer2=setInterval(function(){crackTap()},1000);
+var timer2=setInterval(function(){crackTap();},1000);
 
 
 /*
