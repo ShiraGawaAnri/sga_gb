@@ -1,4 +1,4 @@
-//ÀàµÄ¹¹½¨¶¨Òå£¬Ö÷ÒªÖ°Ôğ¾ÍÊÇĞÂ½¨XMLHttpRequest¶ÔÏó  
+ï»¿//ç±»çš„æ„å»ºå®šä¹‰ï¼Œä¸»è¦èŒè´£å°±æ˜¯æ–°å»ºXMLHttpRequestå¯¹è±¡  
 var MyXMLHttpRequest=function(){  
     var xmlhttprequest;  
     if(window.XMLHttpRequest){  
@@ -19,21 +19,21 @@ var MyXMLHttpRequest=function(){
     }  
       
     if(xmlhttprequest == undefined || xmlhttprequest == null){  
-        alert("XMLHttpRequest¶ÔÏó´´½¨Ê§°Ü£¡£¡");  
+        alert("XMLHttpRequestå¯¹è±¡åˆ›å»ºå¤±è´¥ï¼ï¼");  
     }else{  
         this.xmlhttp=xmlhttprequest;  
     }  
       
-    //ÓÃ»§·¢ËÍÇëÇóµÄ·½·¨  
+    //ç”¨æˆ·å‘é€è¯·æ±‚çš„æ–¹æ³•  
     MyXMLHttpRequest.prototype.send=function(method,url,data,callback,failback){  
         if(this.xmlhttp!=undefined && this.xmlhttp!=null){  
             method=method.toUpperCase();  
             if(method!="GET" && method!="POST"){  
-                alert("HTTPµÄÇëÇó·½·¨±ØĞëÎªGET»òPOST!!!");  
+                alert("HTTPçš„è¯·æ±‚æ–¹æ³•å¿…é¡»ä¸ºGETæˆ–POST!!!");  
                 return;  
             }  
             if(url==null || url==undefined){  
-                alert("HTTPµÄÇëÇóµØÖ·±ØĞëÉèÖÃ£¡");  
+                alert("HTTPçš„è¯·æ±‚åœ°å€å¿…é¡»è®¾ç½®ï¼");  
                 return ;  
             }  
             var tempxmlhttp=this.xmlhttp;  
@@ -43,15 +43,15 @@ var MyXMLHttpRequest=function(){
                         var responseText=temxmlhttp.responseText;  
                         var responseXML=temxmlhttp.reponseXML;  
                         if(callback==undefined || callback==null){  
-                            alert("Ã»ÓĞÉèÖÃ´¦ÀíÊı¾İÕıÈ··µ»ØµÄ·½·¨");  
-                            alert("·µ»ØµÄÊı¾İ£º" + responseText);  
+                            alert("æ²¡æœ‰è®¾ç½®å¤„ç†æ•°æ®æ­£ç¡®è¿”å›çš„æ–¹æ³•");  
+                            alert("è¿”å›çš„æ•°æ®ï¼š" + responseText);  
                         }else{  
                             callback(responseText,responseXML);  
                         }  
                     }else{  
                         if(failback==undefined ||failback==null){  
-                            alert("Ã»ÓĞÉèÖÃ´¦ÀíÊı¾İ·µ»ØÊ§°ÜµÄ´¦Àí·½·¨£¡");  
-                            alert("HTTPµÄÏìÓ¦Âë£º" + tempxmlhttp.status + ",ÏìÓ¦ÂëµÄÎÄ±¾ĞÅÏ¢£º" + tempxmlhttp.statusText);  
+                            alert("æ²¡æœ‰è®¾ç½®å¤„ç†æ•°æ®è¿”å›å¤±è´¥çš„å¤„ç†æ–¹æ³•ï¼");  
+                            alert("HTTPçš„å“åº”ç ï¼š" + tempxmlhttp.status + ",å“åº”ç çš„æ–‡æœ¬ä¿¡æ¯ï¼š" + tempxmlhttp.statusText);  
                         }else{  
                             failback(tempxmlhttp.status,tempxmlhttp.statusText);  
                         }  
@@ -59,27 +59,27 @@ var MyXMLHttpRequest=function(){
                 }  
             }  
               
-            //½â¾ö»º´æµÄ×ª»»  
+            //è§£å†³ç¼“å­˜çš„è½¬æ¢  
             if(url.indexOf("?")>=0){  
                 url=url + "&t=" + (new Date()).valueOf();  
             }else{  
                 url=url+"?+="+(new Date()).valueOf();  
             }  
               
-            //½â¾ö¿çÓòµÄÎÊÌâ  
+            //è§£å†³è·¨åŸŸçš„é—®é¢˜  
             if(url.indexOf("http://")>=0){  
                 url.replace("?","&");  
                 url="Proxy?url=" +url;  
             }  
             this.xmlhttp.open(method,url,true);  
               
-            //Èç¹ûÊÇPOST·½Ê½£¬ĞèÒªÉèÖÃÇëÇóÍ·  
+            //å¦‚æœæ˜¯POSTæ–¹å¼ï¼Œéœ€è¦è®¾ç½®è¯·æ±‚å¤´  
             if(method=="POST"){  
                 this.xmlhttp.setRequestHeader("Content-type","application/x-www-four-urlencoded");  
             }  
             this.xmlhttp.send(data);  
     }else{  
-        alert("XMLHttpRequest¶ÔÏó´´½¨Ê§°Ü£¬ÎŞ·¨·¢ËÍÊı¾İ£¡");  
+        alert("XMLHttpRequestå¯¹è±¡åˆ›å»ºå¤±è´¥ï¼Œæ— æ³•å‘é€æ•°æ®ï¼");  
     }  
     MyXMLHttpRequest.prototype.abort=function(){  
         this.xmlhttp.abort();  
