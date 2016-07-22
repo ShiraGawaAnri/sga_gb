@@ -3,6 +3,7 @@ $.ajaxSettings.beforeSend = function(xhr,options){
 	var key = options.url;
 	var complete = options.complete;
 	if(key.match(/version/)){
+		alert("拦截")
 		console.log("拦截")
 		xhr.abort();
 		return false;
