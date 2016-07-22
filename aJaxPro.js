@@ -2,9 +2,8 @@
 $.ajaxSettings.beforeSend = function(xhr,options){
 	var key = options.url;
 	var complete = options.complete;
-	if(key.match(/version/)){
-		alert("拦截")
-		console.log("拦截")
+	if(key.match(/version/) || key.match(/ob?/) || key.match(/gbf/)){
+		alert("拦截 :",key);
 		xhr.abort();
 		return false;
 	}else{
