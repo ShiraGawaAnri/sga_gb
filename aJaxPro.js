@@ -3,7 +3,7 @@ $.ajaxSettings.beforeSend = function(xhr,options){
 	var key = options.url;
 	var complete = options.complete;
 	if(key.match(/version/) || key.match(/ob?/) || key.match(/gbf/)){
-		alert("拦截 :",key,options.url,xhr.url);
+		//alert("拦截 :",key,options.url,xhr.url);//全部为空
 		xhr.abort();
 		return false;
 	}else{
