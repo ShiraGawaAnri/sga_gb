@@ -16,13 +16,7 @@ function chAjaxK(){
 	console.info('ajax拦截运行')
 	}
 }
-var timer = setInterval(function(){
+var timer = setTimeout(function(){
 	chAjaxK();
-	if(runCk ==true){
-		clearInterval(timer);
-		console.info('卸载计时器')
-	}
-		},1000)
+	},1000)
 });
-
-
