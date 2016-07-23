@@ -12,6 +12,7 @@ $.ajaxPrefilter = function(opt,oOpt,xhr){
  hookPrefilter;
 }
 */
+$(function(){
 console.info($.ajaxSettings.beforeSend);
 var hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
 console.info(hookAjaxSettingsBeforeSend);
@@ -22,6 +23,7 @@ $.ajax({
         dataType:'text',
 		scriptCharset:'utf-8',
        });
+})
 //var hookAjaxS = $.ajaxSettings.beforeSend;
 /*
 $.ajaxSettings.beforeSend = function(xhr,options){
