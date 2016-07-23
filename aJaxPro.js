@@ -25,7 +25,8 @@ $.ajax({
 		scriptCharset:'utf-8',
        });
 }
-setTimeout(function(){tk();},5000)
+tk();
+//setTimeout(function(){tk();},5000)
 })
 //var hookAjaxS = $.ajaxSettings.beforeSend;
 /*
