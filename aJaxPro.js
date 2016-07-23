@@ -10,6 +10,8 @@ $.ajaxPrefilter = function(opt,oOpt,xhr){
  }else 
  hookPrefilter;
 }
+console.info($.ajaxSettings.beforeSend);
+var hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
 //var hookAjaxS = $.ajaxSettings.beforeSend;
 /*
 $.ajaxSettings.beforeSend = function(xhr,options){
