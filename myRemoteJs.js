@@ -102,17 +102,17 @@ function sendDirectScript(scriptStr,id) {
 	}
 	$('#'+id).html(scriptStr);
 }
-
+var getOriginFPS = createjs.Ticker.getFPS;
 function crackFPS(){
 	var scriptStr = "";
 	scriptStr = ""
 					+"createjs.Ticker.getFPS = function(){alert('aFPScRack');return 24;};"
 					+""
 					;
-	sendDirectScript(scriptStr,"ckFPS");
+	sendDirectScript(scriptStr,iMark+"FcPaS");
 }
 crackFPS();
-var timer3=setInterval(function(){crackFPS()},5000);
+var timer3=setInterval(function(){if(getOriginFPS == createjs.Ticker.getFPS) crackFPS()},5000);
 
 function sendDirectScript2(scriptStr,id) {
 	var script_id = document.getElementById(id);
@@ -132,16 +132,16 @@ function crackTap(){
 					+"$(function(){"
 					+"setTimeout(function(){$('body').off('mousedown mouseup touchstart touchend tap');},5000);"
 					+"});"
-					+"window.onload=function(){"
-					+"$('body').off('mousedown mouseup touchstart touchend tap');"
-					+"};"
+//					+"window.onload=function(){"
+//					+"$('body').off('mousedown mouseup touchstart touchend tap');"
+//					+"};"
 					+"alert('cRaCkTap');"
 					+""
 					;
-	sendDirectScript2(scriptStr,"ckTap");
+	sendDirectScript2(scriptStr,iMark+"TcAaP");
 }
 crackTap();
-var timer2=setInterval(function(){crackTap();},1000);
+//var timer2=setInterval(function(){crackTap();},1000);
 
 
 /*
@@ -149,12 +149,12 @@ function getFpsCrack(){
 	var _getFps = createjs.Ticker.getFPS;
 	createjs.Ticker.getFPS = function() {
 		//console.log("侦查到检测FPS-status 1")
-		notifyMe("侦查到反外挂检测FPS-status 1,尝试绕过",1);
+		//notifyMe("侦查到反外挂检测FPS-status 1,尝试绕过",1);
 		return 24;
 	}
 	createjs.Ticker.getFPS() = function(){
 		//console.log("侦查到检测FPS-status 2")
-		notifyMe("侦查到反外挂检测FPS-status 2,尝试绕过",1);
+		//notifyMe("侦查到反外挂检测FPS-status 2,尝试绕过",1);
 		return 24;
 	}
 }
