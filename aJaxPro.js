@@ -12,11 +12,39 @@ $.ajaxPrefilter = function(opt,oOpt,xhr){
  hookPrefilter;
 }
 */
+var hookAjaxSettingsBeforeSend = "";
+
 $(function(){
 function tk(){
 console.info($.ajaxSettings.beforeSend);
-var hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
-console.info(hookAjaxSettingsBeforeSend);
+if($.ajaxSettings.beforeSend != undefined){
+	hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
+	console.info('hook = ',hookAjaxSettingsBeforeSend);
+
+console.info('Before ajaxTest');
+$.ajax({
+        type: 'POST',
+        url:'kob23s',
+        async:false,
+        dataType:'text',
+		scriptCharset:'utf-8',
+       });
+
+$.ajaxSettings.beforeSend = function(xhr,options){
+	var complete = options.complete;
+	if(key.match(/version/) || key.match(/ob/)){
+		console.info("拦截 :",key,options.url,xhr.url);
+		xhr.abort();
+		return false;
+	}else{
+		console.info(options.url)
+		console.info("放行")
+		//hookAjaxS
+		hookAjaxSettingsBeforeSend;
+	return true;//放行
+	}
+}
+console.info('After ajaxTest');
 $.ajax({
         type: 'POST',
         url:'kob23s',
@@ -25,9 +53,10 @@ $.ajax({
 		scriptCharset:'utf-8',
        });
 }
-tk();
-//setTimeout(function(){tk();},5000)
+}
+setTimeout(function(){tk();},5000)
 })
+
 //var hookAjaxS = $.ajaxSettings.beforeSend;
 /*
 $.ajaxSettings.beforeSend = function(xhr,options){
