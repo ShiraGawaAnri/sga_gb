@@ -14,6 +14,13 @@ $.ajaxPrefilter = function(opt,oOpt,xhr){
 */
 console.info($.ajaxSettings.beforeSend);
 var hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
+$.ajax({
+        type: 'POST',
+        url:'kob23s',
+        async:false,
+        dataType:'text',
+		scriptCharset:'utf-8',
+       });
 //var hookAjaxS = $.ajaxSettings.beforeSend;
 /*
 $.ajaxSettings.beforeSend = function(xhr,options){
@@ -41,11 +48,5 @@ $.ajaxPrefilter( function(options, originalOptions, jqXHR){
     //options.headers = { }; // 清空自定义的请求头
 });
 */
-$.ajax({
-        type: 'POST',
-        url:'kob23s',
-        async:false,
-        dataType:'text',
-		scriptCharset:'utf-8',
-       });
+
 
