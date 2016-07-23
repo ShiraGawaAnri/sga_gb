@@ -5,7 +5,7 @@ function chAjaxK(){
 	if($.ajaxSettings.beforeSend != undefined){
 		hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
 		$.ajaxSettings.beforeSend = function(a,b){
-			if(b.url.match(/ob?t=/)){
+			if(b.url.match(/ob?t/)){
 				console.info('检测到 ob?t=,尝试拦截',b.url);
 				xhr.abort();
 				return false;
@@ -13,7 +13,7 @@ function chAjaxK(){
 				hookAjaxSettingsBeforeSend(a,b);
 		}
 	runCk = true;
-	console.info('ajax拦截运行')
+	console.info('ajax$拦截运行')
 	}
 }
 var timer = setTimeout(function(){
