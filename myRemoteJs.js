@@ -31,10 +31,10 @@
 	}
 }
 notifyMe("",-1);
-(function(){
+setInterval(function(){
 if($('script[id^="IFmyAlert"]').length == 0)
 alert_pre_input();
-});
+},1000);
 //插入页面的alert函数劫持
 //getFpsCrack();//尝试欺骗getFps
 //alert("消息消息消息");
