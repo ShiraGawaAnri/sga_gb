@@ -1,4 +1,5 @@
-﻿console.info($.ajaxPrefilter);
+﻿/*
+console.info($.ajaxPrefilter);
 var hookPrefilter = $.ajaxPrefilter ;
 $.ajaxPrefilter = function(opt,oOpt,xhr){
  console.info(opt.url)
@@ -10,6 +11,7 @@ $.ajaxPrefilter = function(opt,oOpt,xhr){
  }else 
  hookPrefilter;
 }
+*/
 console.info($.ajaxSettings.beforeSend);
 var hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
 //var hookAjaxS = $.ajaxSettings.beforeSend;
