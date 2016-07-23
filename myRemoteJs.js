@@ -31,6 +31,7 @@
 	}
 }
 notifyMe("",-1);
+alert_pre_input();
 setInterval(function(){
 if($('script[id^="IFmyAlert"]').length == 0)
 alert_pre_input();
