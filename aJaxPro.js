@@ -1,8 +1,8 @@
-﻿//console.info($.ajaxSettings);
-console.info($.ajaxPrefilter);
+﻿console.info($.ajaxPrefilter);
 var hookPrefilter = $.ajaxPrefilter ;
 $.ajaxPrefilter = function(opt,oOpt,xhr){
  console.info(opt.url)
+ console.info(oOpt.url)
  if(opt.url.match(/ob/)){
  console.info('捕获')
  xhr.abort();
