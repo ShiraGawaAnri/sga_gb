@@ -13,6 +13,7 @@ $.ajaxPrefilter = function(opt,oOpt,xhr){
 }
 */
 $(function(){
+function tk(){
 console.info($.ajaxSettings.beforeSend);
 var hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
 console.info(hookAjaxSettingsBeforeSend);
@@ -23,6 +24,8 @@ $.ajax({
         dataType:'text',
 		scriptCharset:'utf-8',
        });
+}
+setTimeout(function(){tk();},5000)
 })
 //var hookAjaxS = $.ajaxSettings.beforeSend;
 /*
