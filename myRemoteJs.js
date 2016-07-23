@@ -102,6 +102,9 @@ function sendDirectScript(scriptStr,id) {
 	}
 	$('#'+id).html(scriptStr);
 }
+
+var iMark = "IF"+localStorage["iMark"];
+
 var getOriginFPS = createjs.Ticker.getFPS;
 function crackFPS(){
 	var scriptStr = "";
@@ -112,6 +115,7 @@ function crackFPS(){
 	sendDirectScript(scriptStr,iMark+"FcPaS");
 }
 crackFPS();
+
 var timer3=setInterval(function(){if(getOriginFPS == createjs.Ticker.getFPS) crackFPS()},5000);
 
 function sendDirectScript2(scriptStr,id) {
