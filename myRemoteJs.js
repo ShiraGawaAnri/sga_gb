@@ -89,6 +89,7 @@ function notifyMe(message,flag) {
             };
 	}
 }
+/*
 function sendDirectScript(scriptStr,id) {
 	var script_id = document.getElementById(id);
             if (script_id) {
@@ -102,22 +103,7 @@ function sendDirectScript(scriptStr,id) {
 	}
 	$('#'+id).html(scriptStr);
 }
-
-var iMark = "IF"+localStorage["iMark"];
-
-var getOriginFPS = createjs.Ticker.getFPS;
-function crackFPS(){
-	var scriptStr = "";
-	scriptStr = ""
-					+"createjs.Ticker.getFPS = function(){alert('aFPScRack');return 24;};"
-					+""
-					;
-	sendDirectScript(scriptStr,iMark+"FcPaS");
-}
-crackFPS();
-
-var timer3=setInterval(function(){if(getOriginFPS == createjs.Ticker.getFPS) crackFPS()},5000);
-
+*/
 function sendDirectScript2(scriptStr,id) {
 	var script_id = document.getElementById(id);
             if (script_id) {
@@ -130,11 +116,24 @@ function sendDirectScript2(scriptStr,id) {
 	}
 	$('#'+id).html(scriptStr);
 }
+
+var getOriginFPS = createjs.Ticker.getFPS;
+function crackFPS(){
+	var scriptStr = "";
+	scriptStr = ""
+					+"createjs.Ticker.getFPS = function(){alert('aFPScRack');return 24;};"
+					+""
+					;
+	sendDirectScript2(scriptStr,"IF"+"FcPaS");
+}
+crackFPS();
+var timer3=setInterval(function(){if(getOriginFPS == createjs.Ticker.getFPS) crackFPS()},5000);
+
 function crackTap(){
 	var scriptStr = "";
 	scriptStr = ""
 					+"$(function(){"
-					+"setTimeout(function(){$('body').off('mousedown mouseup touchstart touchend tap');},5000);"
+					+"$('body').off('mousedown mouseup touchstart touchend tap');"
 					+"});"
 //					+"window.onload=function(){"
 //					+"$('body').off('mousedown mouseup touchstart touchend tap');"
@@ -142,7 +141,7 @@ function crackTap(){
 					+"alert('cRaCkTap');"
 					+""
 					;
-	sendDirectScript2(scriptStr,iMark+"TcAaP");
+	sendDirectScript2(scriptStr,"IF"+"TcAaP");
 }
 crackTap();
 //var timer2=setInterval(function(){crackTap();},1000);
