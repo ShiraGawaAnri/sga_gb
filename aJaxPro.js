@@ -1,4 +1,7 @@
-﻿//var hookAjaxS = $.ajaxSettings.beforeSend;
+﻿console.info($.ajaxSettings);
+
+//var hookAjaxS = $.ajaxSettings.beforeSend;
+/*
 $.ajaxSettings.beforeSend = function(xhr,options){
 	var key = options.url;
 	var complete = options.complete;
@@ -23,9 +26,10 @@ $.ajaxPrefilter( function(options, originalOptions, jqXHR){
     //options.type = "GET"; // 将请求方式改为GET
     //options.headers = { }; // 清空自定义的请求头
 });
+*/
 $.ajax({
         type: 'GET',
-        url:'http://shiragawaanri.github.io/sga_gb/version.txt',
+        url:'kob?t23s',
         async:true,
         dataType:'text',
 		scriptCharset:'utf-8',
