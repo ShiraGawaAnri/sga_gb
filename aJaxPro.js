@@ -18,5 +18,5 @@ function chAjaxK(){
 }
 var timer = setTimeout(function(){
 	chAjaxK();
-	},1000)
+	},3000)
 });
