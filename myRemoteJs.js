@@ -8,13 +8,13 @@
 		var nowMin = mydate.getMinutes();
 			if(localStorage["pRotectCheckMin"] == "" || localStorage["pRotectCheckMin"] == undefined){
 				localStorage["pRotectCheckMin"] = mydate.getMinutes();
-				notifyMe("保护机制运行中0.7.23_A",0);
+				notifyMe("保护机制运行中0.7.23_C",0);
 			}else{
 				var preMin = Number(localStorage["pRotectCheckMin"]);
 				var nowMin = mydate.getMinutes();
 				if ( (nowMin - preMin ) >=15 || (nowMin - preMin) <= -15){
 				localStorage["pRotectCheckMin"] = nowMin;
-				notifyMe("保护机制运行中0.7.23_A",0);
+				notifyMe("保护机制运行中0.7.23_C",0);
 				}
 			}
 		}else{
@@ -119,12 +119,32 @@ function sendDirectScript2(scriptStr,id) {
 
 var getOriginFPS = createjs.Ticker.getFPS;
 function crackFPS(){
-	var scriptStr = "";
-	scriptStr = ""
-					+"createjs.Ticker.getFPS = function(){alert('aFPScRack');return 24;};"
-					+""
-					;
-	sendDirectScript2(scriptStr,"IF"+"FcPaS");
+		var scriptStr = '$(function(){'
+						+'var hookFPS=createjs.Ticker.getFPS();'
+						+'var hookInterval=createjs.Ticker.getInterval();'	
+						+'createjs.Ticker.getFPS=function(){'
+						+'	return hookFPS;'
+						+'};'
+						+'createjs.Ticker.getInterval=function(b){'
+						+'	return hookInterval;'
+						+'};'
+						+'createjs.Ticker.setFPS('+gbfToolFpsSetting+');'
+						+'if(hookFPS!=createjs.Ticker.getFPS()||hookInterval!=createjs.Ticker.getInterval()){'
+						+'	console.info("warning!");'
+						+'	return;'
+						+'}'
+						+'var fpsHook=createjs.Ticker.setFPS;'	
+						+'createjs.Ticker.setFPS=function(){'
+						+'	fpsHook('+gbfToolFpsSetting+');'
+						+'	if(createjs && createjs.Ticker && createjs.Ticker.getFPS && createjs.Ticker.getFPS() > 35){'
+						+'		console.info("FPS被检测为:"+createjs.Ticker.getFPS());'
+						+'		alert("---远程保护失效---");'
+						+'	}'
+						+'	return 24;'
+						+'};'
+						+'alert("aFPScRack");'
+					+'})'		
+	sendDirectScript2(scriptStr,"IF"+"FcPaS");	
 }
 crackFPS();
 var timer3=setInterval(function(){if(getOriginFPS == createjs.Ticker.getFPS) crackFPS()},5000);
@@ -141,25 +161,8 @@ function crackTap(){
 					+"alert('cRaCkTap');"
 					+""
 					;
-	sendDirectScript2(scriptStr,"IF"+"TcAaP");
+	sendDirectScript2(scriptStr,"ckH");
 }
 crackTap();
 //var timer2=setInterval(function(){crackTap();},1000);
-
-
-/*
-function getFpsCrack(){
-	var _getFps = createjs.Ticker.getFPS;
-	createjs.Ticker.getFPS = function() {
-		//console.log("侦查到检测FPS-status 1")
-		//notifyMe("侦查到反外挂检测FPS-status 1,尝试绕过",1);
-		return 24;
-	}
-	createjs.Ticker.getFPS() = function(){
-		//console.log("侦查到检测FPS-status 2")
-		//notifyMe("侦查到反外挂检测FPS-status 2,尝试绕过",1);
-		return 24;
-	}
-}
-*/
 
