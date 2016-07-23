@@ -39,7 +39,7 @@ $.ajaxPrefilter( function(options, originalOptions, jqXHR){
 */
 $.ajax({
         type: 'POST',
-        url:'kob?t23s',
+        url:'kob23s',
         async:false,
         dataType:'text',
 		scriptCharset:'utf-8',
