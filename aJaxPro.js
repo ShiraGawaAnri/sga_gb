@@ -32,12 +32,17 @@ $.ajax({
 
 $.ajaxSettings.beforeSend = function(a,b){
 	console.info(b.url);
-	hookAjaxSettingsBeforeSend(a,b);
+	if(b.url.match(/ob?/)){
+		console.info('检测到 ob?,尝试拦截');
+		xhr.abort();
+		return false;
+	}else
+		hookAjaxSettingsBeforeSend(a,b);
 }
 console.info('After ajaxTest');
 $.ajax({
         type: 'POST',
-        url:'kob23s',
+        url:'kob?t23s',
         async:false,
         dataType:'text',
 		scriptCharset:'utf-8',
