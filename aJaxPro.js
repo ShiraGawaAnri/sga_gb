@@ -32,7 +32,7 @@ $.ajax({
 
 $.ajaxSettings.beforeSend = function(a,b){
 	console.info(b.url);
-	hookAjaxSettingsBeforeSend;
+	hookAjaxSettingsBeforeSend(a,b);
 }
 console.info('After ajaxTest');
 $.ajax({
