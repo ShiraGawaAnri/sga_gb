@@ -30,8 +30,9 @@ $.ajax({
 		scriptCharset:'utf-8',
        });
 
-$.ajaxSettings.beforeSend = function(xhr,options){
-	console.info(options.url);
+$.ajaxSettings.beforeSend = function(a,b){
+	console.info(b.url);
+	hookAjaxSettingsBeforeSend;
 }
 console.info('After ajaxTest');
 $.ajax({
