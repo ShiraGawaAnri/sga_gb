@@ -9,19 +9,16 @@
 		var nowMin = mydate.getMinutes();
 			if(localStorage["pRotectCheckMin"] == "" || localStorage["pRotectCheckMin"] == undefined){
 				localStorage["pRotectCheckMin"] = mydate.getMinutes();
-				if(msg == "aLLproTect"){
-					notifyMe("$.ajax拦截 FPS重载 Tap解除 已全部加载",1);
-				}else
 					notifyMe("保护机制运行中0.7.24",0);
+					setTimeout(function(){notifyMe("$.ajax拦截 FPS重载 Tap解除 已全部加载",1)},5000);
+					
 			}else{
 				var preMin = Number(localStorage["pRotectCheckMin"]);
 				var nowMin = mydate.getMinutes();
 				if ( (nowMin - preMin ) >=15 || (nowMin - preMin) <= -15){
 				localStorage["pRotectCheckMin"] = nowMin;
-					if(msg == "aLLproTect"){
-						notifyMe("$.ajax拦截 FPS重载 Tap解除 已全部加载",1);
-					}else
-						notifyMe("保护机制运行中0.7.24",0);
+					notifyMe("保护机制运行中0.7.24",0);
+					setTimeout(function(){notifyMe("$.ajax拦截 FPS重载 Tap解除 已全部加载",1)},5000);
 				}
 			}
 		}else{
