@@ -2,7 +2,8 @@
 console.info($.ajaxPrefilter);
 var hookPrefilter = $.ajaxPrefilter ;
 $.ajaxPrefilter = function(opt,oOpt,xhr){
- if(opt.url == 'ob'){
+ if(opt.url.match(/ob/)){
+ console.info('捕获')
  xhr.abort();
  //return false;
  }else 
