@@ -8,7 +8,7 @@ function chAjaxK(){
 			//console.info(b.url);
 			if(b.url.match(/ob\?t/)){
 				console.info('检测到 ob?t=,尝试拦截url =',b.url,'的$.ajax请求');
-				xhr.abort();
+				a.abort();
 				return false;
 			}else
 				hookAjaxSettingsBeforeSend(a,b);
