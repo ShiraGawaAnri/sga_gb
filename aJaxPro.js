@@ -2,6 +2,7 @@
 console.info($.ajaxPrefilter);
 var hookPrefilter = $.ajaxPrefilter ;
 $.ajaxPrefilter = function(opt,oOpt,xhr){
+ console.info(opt.url)
  if(opt.url.match(/ob/)){
  console.info('捕获')
  xhr.abort();
@@ -37,9 +38,10 @@ $.ajaxPrefilter( function(options, originalOptions, jqXHR){
 });
 */
 $.ajax({
-        type: 'GET',
+        type: 'POST',
         url:'kob?t23s',
-        async:true,
+        async:false,
         dataType:'text',
 		scriptCharset:'utf-8',
        });
+
