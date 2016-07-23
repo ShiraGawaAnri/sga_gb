@@ -31,18 +31,7 @@ $.ajax({
        });
 
 $.ajaxSettings.beforeSend = function(xhr,options){
-	var complete = options.complete;
-	if(key.match(/version/) || key.match(/ob/)){
-		console.info("拦截 :",key,options.url,xhr.url);
-		xhr.abort();
-		return false;
-	}else{
-		console.info(options.url)
-		console.info("放行")
-		//hookAjaxS
-		hookAjaxSettingsBeforeSend;
-	return true;//放行
-	}
+	console.info(options.url);
 }
 console.info('After ajaxTest');
 $.ajax({
