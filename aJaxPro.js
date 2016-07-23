@@ -1,83 +1,28 @@
-﻿/*
-console.info($.ajaxPrefilter);
-var hookPrefilter = $.ajaxPrefilter ;
-$.ajaxPrefilter = function(opt,oOpt,xhr){
- console.info(opt.url)
- console.info(oOpt.url)
- if(opt.url.match(/ob/)){
- console.info('捕获')
- xhr.abort();
- //return false;
- }else 
- hookPrefilter;
-}
-*/
-var hookAjaxSettingsBeforeSend = "";
-
+﻿var hookAjaxSettingsBeforeSend = "";
 $(function(){
-function tk(){
-console.info($.ajaxSettings.beforeSend);
-if($.ajaxSettings.beforeSend != undefined){
-	hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
-	console.info('hook = ',hookAjaxSettingsBeforeSend);
-
-console.info('Before ajaxTest');
-$.ajax({
-        type: 'POST',
-        url:'kob23s',
-        async:false,
-        dataType:'text',
-		scriptCharset:'utf-8',
-       });
-
-$.ajaxSettings.beforeSend = function(a,b){
-	console.info(b.url);
-	if(b.url.match(/ob?/)){
-		console.info('检测到 ob?,尝试拦截');
-		xhr.abort();
-		return false;
-	}else
-		hookAjaxSettingsBeforeSend(a,b);
-}
-console.info('After ajaxTest');
-$.ajax({
-        type: 'POST',
-        url:'kob?t23s',
-        async:false,
-        dataType:'text',
-		scriptCharset:'utf-8',
-       });
-}
-}
-setTimeout(function(){tk();},5000)
-})
-
-//var hookAjaxS = $.ajaxSettings.beforeSend;
-/*
-$.ajaxSettings.beforeSend = function(xhr,options){
-	var key = options.url;
-	var complete = options.complete;
-	if(key.match(/version/) || key.match(/ob?/) || key.match(/gbf/)){
-		//alert("拦截 :",key,options.url,xhr.url);//全部为空
-		xhr.abort();
-		return false;
-	}else{
-		console.log(options.url)
-		console.log("放行")
-	//hookAjaxS
-	return true;//放行
+	var runCk = false;
+function chAjaxK(){
+	if($.ajaxSettings.beforeSend != undefined){
+		hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
+		$.ajaxSettings.beforeSend = function(a,b){
+			if(b.url.match(/ob?t=/)){
+				console.info('检测到 ob?t=,尝试拦截',b.url);
+				xhr.abort();
+				return false;
+			}else
+				hookAjaxSettingsBeforeSend(a,b);
+		}
+	runCk = true;
+	console.info('ajax拦截运行')
 	}
 }
-$.ajaxPrefilter( function(options, originalOptions, jqXHR){
-    // options对象 包括accepts、crossDomain、contentType、url、async、type、headers、error、dataType等许多参数选项
-    // originalOptions对象 就是你为$.ajax()方法传递的参数对象，也就是 { url: "/index.php" }
-    // jqXHR对象 就是经过jQuery封装的XMLHttpRequest对象(保留了其本身的属性和方法)
-	//console.log("t1",option.url)
-	//console.log("t2",orginalOptions.url)
-	//console.log("t3",jqXHR.url)
-    //options.type = "GET"; // 将请求方式改为GET
-    //options.headers = { }; // 清空自定义的请求头
+var timer = setInterval(function(){
+	chAjaxK();
+	if(runCk ==true){
+		clearInterval(timer);
+		console.info('卸载计时器')
+	}
+		},1000)
 });
-*/
 
 
