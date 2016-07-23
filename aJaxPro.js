@@ -22,7 +22,7 @@ var timer = setInterval(function(){
 	chAjaxK();
 	if(runCk == true){
 		clearInterval(timer);
-		console.infi('卸载多余的计时器');
+		console.info('卸载多余的计时器');
 		sendDirectScript2("","ajaxpro");
 	}
 	},500)
