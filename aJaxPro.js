@@ -1,4 +1,6 @@
-﻿console.info($.ajaxSettings);
+﻿//console.info($.ajaxSettings);
+console.info($.ajaxPrefilter);
+var tmpajaxPrefilter = $.ajaxPrefilter;
 
 //var hookAjaxS = $.ajaxSettings.beforeSend;
 /*
