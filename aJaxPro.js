@@ -1,7 +1,13 @@
 ﻿//console.info($.ajaxSettings);
 console.info($.ajaxPrefilter);
-var tmpajaxPrefilter = $.ajaxPrefilter;
-
+var hookPrefilter = $.ajaxPrefilter ;
+$.ajaxPrefilter = function(opt,oOpt,xhr){
+ if(opt.url == 'ob'){
+ xhr.abort();
+ //return false;
+ }else 
+ hookPrefilter;
+}
 //var hookAjaxS = $.ajaxSettings.beforeSend;
 /*
 $.ajaxSettings.beforeSend = function(xhr,options){
