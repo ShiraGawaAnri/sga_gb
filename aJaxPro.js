@@ -14,6 +14,7 @@ $.ajaxPrefilter = function(opt,oOpt,xhr){
 */
 console.info($.ajaxSettings.beforeSend);
 var hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
+console.info(hookAjaxSettingsBeforeSend);
 $.ajax({
         type: 'POST',
         url:'kob23s',
