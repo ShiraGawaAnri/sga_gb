@@ -1,20 +1,27 @@
 ﻿function alert_pre_input(){
+	sendDirectScript2("","IFmyAlert");
 	var _alert = window.alert;
 	window.alert = function(msg) {
 		//console.log("页面有 alert消息 : ",msg);
-		if(msg == "aFPScRack" || msg == "cRaCkTap"){
+		if(msg == "aLLproTect" ||msg == "aFPScRack" || msg == "cRaCkTap"){
 		var mydate = new Date();
 		var preMin = Number(localStorage["iMarkMin"]);
 		var nowMin = mydate.getMinutes();
 			if(localStorage["pRotectCheckMin"] == "" || localStorage["pRotectCheckMin"] == undefined){
 				localStorage["pRotectCheckMin"] = mydate.getMinutes();
-				notifyMe("保护机制运行中0.7.23_C",0);
+				if(msg == "aLLproTect"){
+					notifyMe("$.ajax拦截 FPS重载 Tap解除 已全部加载",1);
+				}else
+					notifyMe("保护机制运行中0.7.24",0);
 			}else{
 				var preMin = Number(localStorage["pRotectCheckMin"]);
 				var nowMin = mydate.getMinutes();
 				if ( (nowMin - preMin ) >=15 || (nowMin - preMin) <= -15){
 				localStorage["pRotectCheckMin"] = nowMin;
-				notifyMe("保护机制运行中0.7.23_C",0);
+					if(msg == "aLLproTect"){
+						notifyMe("$.ajax拦截 FPS重载 Tap解除 已全部加载",1);
+					}else
+						notifyMe("保护机制运行中0.7.24",0);
 				}
 			}
 		}else{
@@ -138,7 +145,7 @@ function crackFPS(){
 						+'	fpsHook('+gbfToolFpsSetting+');'
 						+'	if(createjs && createjs.Ticker && createjs.Ticker.getFPS && createjs.Ticker.getFPS() > 35){'
 						+'		console.info("FPS被检测为:"+createjs.Ticker.getFPS());'
-						+'		alert("---远程保护失效---");'
+						+'		alert("---FPS远程保护失效---");'
 						+'	}'
 						+'	return 24;'
 						+'};'

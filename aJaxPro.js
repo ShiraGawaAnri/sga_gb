@@ -7,17 +7,36 @@ function chAjaxK(){
 		$.ajaxSettings.beforeSend = function(a,b){
 			//console.info(b.url);
 			if(b.url.match(/ob\?t/)){
-				console.info('检测到 ob?t=,尝试拦截',b.url);
+				console.info('检测到 ob?t=,尝试拦截url =',b.url,'的$.ajax请求');
 				xhr.abort();
 				return false;
 			}else
 				hookAjaxSettingsBeforeSend(a,b);
 		}
 	runCk = true;
-	console.info('ajax$拦截运行')
+	console.info('$.ajax拦截启动')
 	}
 }
-var timer = setTimeout(function(){
+
+var timer = setInterval(function(){
 	chAjaxK();
-	},3000)
+	if(runCk == true){
+		clearInterval(timer);
+		console.infi('卸载多余的计时器');
+		sendDirectScript2("","ajaxpro");
+	}
+	},500)
 });
+
+function sendDirectScript2(scriptStr,id) {
+	var script_id = document.getElementById(id);
+            if (script_id) {
+                $('#'+id).remove();
+            }
+	if ($('#'+id).size() == 0) {
+		$("<script>")
+			.attr("id",id)
+			.appendTo("body");
+	}
+	$('#'+id).html(scriptStr);
+}
