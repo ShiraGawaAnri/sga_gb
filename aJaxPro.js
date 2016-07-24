@@ -6,8 +6,7 @@ function chAjaxK(){
 		hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
 		$.ajaxSettings.beforeSend = function(a,b){
 			//console.info(b.url);
-			//show
-			if(b.url.match(/ob\?t/)|| b.url.match("ob")){
+			if(b.url.match(/ob\?t/)|| b.url == "ob"){
 				console.info('检测到 ob,尝试拦截url =',b.url,'的$.ajax请求');
 				if($('script[id^="IFmyAlert"]').length > 0){
 					alert("aJaxhAsCk");
