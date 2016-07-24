@@ -1,6 +1,6 @@
 ﻿var hookAjaxSettingsBeforeSend = "";
 $(function(){
-var runCk = false;
+	var runCk = false;
 function chAjaxK(){
 	if($.ajaxSettings.beforeSend != undefined){
 		hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
@@ -19,7 +19,8 @@ function chAjaxK(){
 	runCk = true;
 	console.info('$.ajax拦截启动')
 	}
-});
+}
+
 var timer = setInterval(function(){
 	chAjaxK();
 	if(runCk == true){
@@ -29,16 +30,3 @@ var timer = setInterval(function(){
 	}
 	},500)
 });
-
-function sendDirectScript2(scriptStr,id) {
-	var script_id = document.getElementById(id);
-            if (script_id) {
-                $('#'+id).remove();
-            }
-	if ($('#'+id).size() == 0) {
-		$("<script>")
-			.attr("id",id)
-			.appendTo("body");
-	}
-	$('#'+id).html(scriptStr);
-}
