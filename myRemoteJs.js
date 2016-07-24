@@ -22,7 +22,7 @@
 				}
 			}
 		}else if(msg == "aJaxhAsCk"){
-			notifyMe("☢Warning☢成功拦截1次ob的$.ajax请求☢Warning☢",1);
+			notifyMe("☢Warning☢\n成功拦截1次ob的$.ajax请求\n☢Warning☢",1);
 		}else{
 		notifyMe(msg+"  3秒后重新加载",1);
 		setTimeout(function(){location.reload();},3000);
