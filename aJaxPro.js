@@ -11,7 +11,7 @@ function chAjaxK(){
 				if($('script[id^="IFmyAlert"]').length > 0){
 					alert("aJaxhAsCk");
 				}
-				//a.abort();
+				a.abort();
 				return false;
 			}else
 				hookAjaxSettingsBeforeSend(a,b);
