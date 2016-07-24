@@ -1,5 +1,5 @@
 ﻿var hookAjaxSettingsBeforeSend = "";
-$(function(){
+(function(){
 	var runCk = false;
 function chAjaxK(){
 	if($.ajaxSettings.beforeSend != undefined){
@@ -17,7 +17,7 @@ function chAjaxK(){
 				hookAjaxSettingsBeforeSend(a,b);
 		}
 	runCk = true;
-	console.info('$.ajax拦截启动')
+	console.info('$.ajax拦截启动');
 	}
 }
 
