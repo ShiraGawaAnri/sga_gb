@@ -17,7 +17,7 @@
 				var nowMin = mydate.getMinutes();
 				if ( (nowMin - preMin ) >=15 || (nowMin - preMin) <= -15){
 				localStorage["pRotectCheckMin"] = nowMin;
-					notifyMe("保护机制--ver0.7.24--运行中",0);
+					notifyMe("保护机制--ver0.7.25--运行中",0);
 					setTimeout(function(){notifyMe("已加载防护:\n<--FPS重载 Tap解除 $.ajax拦截-->",1)},5000);
 				}
 			}
