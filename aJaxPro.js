@@ -20,7 +20,7 @@ function chAjaxK(){
 	console.info('$.ajax拦截启动');
 	}
 }
-chAjaxK();
+//chAjaxK();
 var timer = setInterval(function(){
 	chAjaxK();
 	if(runCk == true){
