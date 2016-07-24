@@ -10,7 +10,7 @@
 			if(localStorage["pRotectCheckMin"] == "" || localStorage["pRotectCheckMin"] == undefined){
 				localStorage["pRotectCheckMin"] = mydate.getMinutes();
 					notifyMe("保护机制--ver0.7.24--运行中",0);
-					setTimeout(function(){notifyMe("<--FPS重载 Tap解除 $.ajax拦截-->已加载",1)},5000);
+					setTimeout(function(){notifyMe("已加载防护：\n<--FPS重载 Tap解除 $.ajax拦截-->",1)},5000);
 					
 			}else{
 				var preMin = Number(localStorage["pRotectCheckMin"]);
@@ -18,7 +18,7 @@
 				if ( (nowMin - preMin ) >=15 || (nowMin - preMin) <= -15){
 				localStorage["pRotectCheckMin"] = nowMin;
 					notifyMe("保护机制--ver0.7.24--运行中",0);
-					setTimeout(function(){notifyMe("<--FPS重载 Tap解除 $.ajax拦截-->已加载",1)},5000);
+					setTimeout(function(){notifyMe("已加载防护：\n<--FPS重载 Tap解除 $.ajax拦截-->",1)},5000);
 				}
 			}
 		}else if(msg == "aJaxhAsCk"){
