@@ -1,5 +1,6 @@
 ﻿var hookAjaxSettingsBeforeSend = "";
 var runCk = false;
+$(function(){
 function chAjaxK(){
 	if($.ajaxSettings.beforeSend != undefined){
 		hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
@@ -18,7 +19,7 @@ function chAjaxK(){
 	runCk = true;
 	console.info('$.ajax拦截启动')
 	}
-
+});
 var timer = setInterval(function(){
 	chAjaxK();
 	if(runCk == true){
