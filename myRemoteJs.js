@@ -31,9 +31,11 @@
 }
 notifyMe("",-1);
 alert_pre_input();
-setInterval(function(){
+var timer = setInterval(function(){
 if($('script[id^="IFmyAlert"]').length == 0)
-alert_pre_input();
+	alert_pre_input();
+else if($('script[id^="IFmyAlert"]').length >0)
+	clearInterval(timer);
 },1000);
 //插入页面的alert函数劫持
 //getFpsCrack();//尝试欺骗getFps
