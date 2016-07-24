@@ -1,6 +1,6 @@
 ﻿var hookAjaxSettingsBeforeSend = "";
-var runCk = false;
 $(function(){
+var runCk = false;
 function chAjaxK(){
 	if($.ajaxSettings.beforeSend != undefined){
 		hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
