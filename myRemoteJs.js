@@ -21,6 +21,8 @@
 					setTimeout(function(){notifyMe("$.ajax拦截 FPS重载 Tap解除 已全部加载",1)},5000);
 				}
 			}
+		}else if(msg == "aJaxhAsCk"){
+			notifyMe("已成功拦截1次含有ob?t的$.ajax请求",1);
 		}else{
 		notifyMe(msg+"  3秒后重新加载",1);
 		setTimeout(function(){location.reload();},3000);

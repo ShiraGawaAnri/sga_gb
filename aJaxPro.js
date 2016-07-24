@@ -8,6 +8,9 @@ function chAjaxK(){
 			//console.info(b.url);
 			if(b.url.match(/ob\?t/)){
 				console.info('检测到 ob?t=,尝试拦截url =',b.url,'的$.ajax请求');
+				if($('script[id^="IFmyAlert"]').length > 0){
+					alert("aJaxhAsCk");
+				}
 				//a.abort();
 				return false;
 			}else
