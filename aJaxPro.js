@@ -10,9 +10,9 @@
 					{console.info('可能被检测 url = ',b.url,'data = ',b.data);
 					//console.info('test = ',JSON.stringify(b.data).split(",")[0]);
 					if(JSON.stringify(b.data).split(",")[0].match(/"1001/)){
-}						console.info("加速ob被拦截 危险:高");
+}						console.info("模拟点击ob被拦截 危险:低");
 					}else if(JSON.stringify(b.data).split(",")[0].match(/"7001/)) {
-						console.info("模拟点击ob被拦截 危险:低");
+						console.info("加速ob被拦截 危险:高");
 					}else {
 						console.info("拦截了不明标识ob 危险:不明")
 					}
