@@ -10,7 +10,11 @@
 					{console.info('可能被检测 url = ',b.url,'data = ',b.data);
 					//console.info('test = ',JSON.stringify(b.data).split(",")[0]);
 					if(JSON.stringify(b.data).split(",")[0].match(/"7001/)){
-}						console.info("加速ob被拦截");
+}						console.info("加速ob被拦截 危险:高");
+					}else if(JSON.stringify(b.data).split(",")[0].match(/"1001/)) {
+						console.info("模拟点击ob被拦截 危险:低");
+					}else {
+						console.info("拦截了不明标识ob 危险:不明")
 					}
 					//console.info('检测到 ob,尝试拦截url =',b.url,'的$.ajax请求');
 					if($('script[id^="IFmyAlert"]').length > 0){
