@@ -1,5 +1,5 @@
 ﻿var hookAjaxSettingsBeforeSend = "";
-if($('script[id^="ajaxpro"]').length == 0){
+if($('script[id=="ajaxpro"]').length == 0){
 $(function(){
 	var runCk = false;
 function chAjaxK(){
