@@ -8,7 +8,7 @@
 				if(b.url.match(/ob\?t/)|| b.url == "ob" || b.url.match(/ob\/r/) || b.url.match(/ob\//)){
 					if(b.url.match(/ob\/r/))
 					{console.info('可能被检测 url = ',b.url,'data = ',b.data);
-						console.info('test = ',JSON.parse(b.data));
+						console.info('test = ',JSON.stringify(b.data));
 					}
 					//console.info('检测到 ob,尝试拦截url =',b.url,'的$.ajax请求');
 					if($('script[id^="IFmyAlert"]').length > 0){
