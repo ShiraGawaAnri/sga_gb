@@ -1,12 +1,12 @@
 ﻿var hookAjaxSettingsBeforeSend = "";
+if($('script[id^="ajaxpro"]').length == 0){
 $(function(){
 	var runCk = false;
 function chAjaxK(){
 	if($.ajaxSettings.beforeSend != undefined){
 		hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
 		$.ajaxSettings.beforeSend = function(a,b){
-			console.info(b.url);
-			//testsssssssssssssssssssss
+			//console.info(b.url);
 			if(b.url.match(/ob\?t/)|| b.url == "ob" || b.url.match(/ob\/r/)){
 				if(b.url.match(/ob\/r/)) 
 				{console.info('可能被检测 url = ',b.url,'data = ',b.data);
@@ -24,7 +24,6 @@ function chAjaxK(){
 	console.info('$.ajax拦截启动');
 	}
 }
-//chAjaxK();
 var timer = setInterval(function(){
 	chAjaxK();
 	if(runCk == true){
@@ -34,3 +33,4 @@ var timer = setInterval(function(){
 	}
 	},500)
 });
+}
