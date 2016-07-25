@@ -10,6 +10,7 @@
 			if(localStorage["pRotectCheckMin"] == "" || localStorage["pRotectCheckMin"] == undefined){
 				localStorage["pRotectCheckMin"] = mydate.getMinutes();
 					notifyMe("保护机制--ver0.7.25_K--运行中\n",0);
+					notifyMe("看见此消息请停用直 ： 2016.7.26 00:00\n若此消息不再出现则可以使用☆Kirara",1);
 					//setTimeout(function(){notifyMe("已正确加载防护:\n<---->",1)},5000);
 					
 			}else{
@@ -18,6 +19,7 @@
 				if ( (nowMin - preMin ) >=15 || (nowMin - preMin) <= -15){
 				localStorage["pRotectCheckMin"] = nowMin;
 					notifyMe("保护机制--ver0.7.25_K--运行中",0);
+					notifyMe("看见此消息请停用直 ： 2016.7.26 00:00\n若此消息不再出现则可以使用☆Kirara",1);
 					//setTimeout(function(){notifyMe("已加载防护:\n<--FPS重载 Tap解除 $.ajax拦截-->",1)},5000);
 				}
 			}
