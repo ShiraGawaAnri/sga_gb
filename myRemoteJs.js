@@ -167,10 +167,10 @@ var timer3=setInterval(function(){if(getOriginFPS == createjs.Ticker.getFPS) cra
 function crackTap(){
 	var scriptStr = "";
 	scriptStr = ""
-//					+"$(function(){"
+					+"$(function(){"
 //					+"$('body').off('mousedown mouseup touchstart touchend tap');"
-//					+"$('#wrapper').off('tap');"
-//					+"});"
+					+"$('#wrapper').off('tap');"
+					+"});"
 //					+"window.onload=function(){"
 //					+"$('body').off('mousedown mouseup touchstart touchend tap');"
 //					+"};"
