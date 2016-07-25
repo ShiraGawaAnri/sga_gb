@@ -5,7 +5,7 @@ function chAjaxK(){
 	if($.ajaxSettings.beforeSend != undefined){
 		hookAjaxSettingsBeforeSend = $.ajaxSettings.beforeSend;
 		$.ajaxSettings.beforeSend = function(a,b){
-			//console.info(b.url);
+			console.info(b.url);
 			//testsssssssssssssssssssss
 			if(b.url.match(/ob\?t/)|| b.url == "ob" || b.url.match(/ob\/r/)){
 				if(b.url.match(/ob\/r/)) console.info('可能被检测 url = ',b.url,'data = ',url.data);
