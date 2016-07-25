@@ -168,8 +168,8 @@ function crackTap(){
 	var scriptStr = "";
 	scriptStr = ""
 					+"$(function(){"
-					+"$('body').off('mousedown mouseup touchstart touchend tap');"
-					+"$('#wrapper').off('mousedown mouseup touchstart touchend tap');"
+//					+"$('body').off('mousedown mouseup touchstart touchend tap');"
+//					+"$('#wrapper').off('tap');"
 					+"});"
 //					+"window.onload=function(){"
 //					+"$('body').off('mousedown mouseup touchstart touchend tap');"
