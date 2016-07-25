@@ -10,7 +10,7 @@
 			if(localStorage["pRotectCheckMin"] == "" || localStorage["pRotectCheckMin"] == undefined){
 				localStorage["pRotectCheckMin"] = mydate.getMinutes();
 					notifyMe("保护机制-ver0.1.3-运行中\n",1);
-					setTimeout(notifyMe("看见此消息请本地版本[低于] 7.26 的姬佬停用\n7.26及以上不用理会 暂时无法禁止模拟点击ob",1),5000);
+					setTimeout(notifyMe("看见此消息请本地版本[低于] 7.26 的姬佬停用\n暂时无法禁止模拟点击ob",1),5000);
 					//setTimeout(function(){notifyMe("已正确加载防护:\n<---->",1)},5000);
 					
 			}else{
@@ -19,7 +19,7 @@
 				if ( (nowMin - preMin ) >=15 || (nowMin - preMin) <= -15){
 				localStorage["pRotectCheckMin"] = nowMin;
 					notifyMe("保护机制-ver0.1.3-运行中\n",1);
-					setTimeout(notifyMe("看见此消息请本地版本[低于] 7.26 的姬佬停用\n7.26及以上不用理会 暂时无法禁止模拟点击ob",1),5000);
+					setTimeout(notifyMe("看见此消息请本地版本[低于] 7.26 的姬佬停用\n暂时无法禁止模拟点击ob",1),5000);
 					//setTimeout(function(){notifyMe("已加载防护:\n<--FPS重载 Tap解除 $.ajax拦截-->",1)},5000);
 				}
 			}
