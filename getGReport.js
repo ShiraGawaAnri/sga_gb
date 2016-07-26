@@ -20,10 +20,10 @@ console.info("start2")
 $(function(){
 	if(getWindowOnerror =="" && window.onerror != "" && window.onerror != undefined){
 		getWindowOnerror = window.onerror;
-		window.onerror = function(msg,url,line,column,err,callback){
+		window.onerror = function(msg, url, line, column, err){
 			console.info("hello window.onerror");
-			console.info("Onerror >>>msg = ",msg,"url = ",url,"err = ",err,"callback = ",callback)
-			getWindowOnerror(msg,url,line,column,err,callback);
+			console.info("Onerror >>>msg = ",msg,"url = ",url,"err = ",err)
+			getWindowOnerror(msg,url,line,column,err);
 		}
 	}
 
