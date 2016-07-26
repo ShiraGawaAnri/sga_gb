@@ -24,7 +24,19 @@
 				}
 			}
 		}else if(msg == "aJaxhAsCk"){
-			notifyMe("☢Warning☢成功拦截☢Warning☢",1);
+			notifyMe("☢Warning☢拦截不明ob☢Warning☢\n危险度:不明",1);
+		}else if(msg == "aJaxhAsCk1001"){
+			notifyMe("☢Warning☢拦截模拟点击ob☢Warning☢\n危险度:低",1);
+		}else if(msg == "aJaxhAsCk7001"){
+			notifyMe("☢Warning☢拦截加速ob☢Warning☢\n危险度:高",1);
+		}else if(msg == "aJaxhAsCk8001"){
+			notifyMe("☢Warning☢拦截ViramateUser(维拉)ob☢Warning☢\n危险度:不明",1);
+		}else if(msg == "aJaxhAsCk9001"){
+			notifyMe("☢Warning☢拦截gbftool(日版小哔)ob☢Warning☢\n危险度:不明",1);
+		}else if(msg == "aJaxhAsCk9002"){
+			notifyMe("☢Warning☢拦截gfe(国内某辅助)ob☢Warning☢\n危险度:不明",1);
+		}else if(msg == "aJaxhAsCk9003"){
+			notifyMe("☢Warning☢guraburu(不明)ob☢Warning☢\n危险度:不明",1);
 		}else{
 		notifyMe("官方消息:"+msg+"\n3秒后重新加载",1);
 		setTimeout(function(){location.reload();},3000);
