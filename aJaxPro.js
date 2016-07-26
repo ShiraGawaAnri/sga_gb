@@ -39,8 +39,8 @@
 						a.abort();
 						//return false;
 					//}
-				}else if(b.url.match(/error\/js/)){
-					console.info("error\js送信拦截")
+				}else if(b.url.match(/error\//)){
+					console.info("error/送信拦截")
 				}else
 					hookAjaxSettingsBeforeSend(a,b);
 			}
