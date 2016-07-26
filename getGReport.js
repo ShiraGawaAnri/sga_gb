@@ -22,7 +22,7 @@ $(function(){
 		window.onerror = function(msg,url,line,column,err,callback){
 			console.info("hello window.onerror");
 			console.info("Onerror >>>msg = ",msg,"url = ",url,"err = ",err,"callback = ",callback)
-			window.onerror(msg,url,line,column,err,callback);
+			getWindowOnerror(msg,url,line,column,err,callback);
 			return true;
 		}
 	}
