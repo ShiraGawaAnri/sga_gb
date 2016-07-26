@@ -1,4 +1,5 @@
-/*var getGameReport = "";
+﻿/*
+var getGameReport = "";
 console.info("start")
 $(function(){
 	if(getGameReport == "" && Game.reportError != undefined && Game.reportError != "") {

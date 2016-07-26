@@ -116,21 +116,6 @@ function notifyMe(message,flag) {
             };
 	}
 }
-/*
-function sendDirectScript(scriptStr,id) {
-	var script_id = document.getElementById(id);
-            if (script_id) {
-                //document.getElementsByTagName('head')[0].removeChild(script_id);
-                $('#'+id).remove();
-            }
-	if ($('#'+id).size() == 0) {
-		$("<script>")
-			.attr("id",id)
-			.appendTo("head");
-	}
-	$('#'+id).html(scriptStr);
-}
-*/
 function sendDirectScript2(scriptStr,id) {
 	var script_id = document.getElementById(id);
             if (script_id) {
