@@ -143,7 +143,7 @@ function sendDirectScript2(scriptStr,id) {
 	}
 	$('#'+id).html(scriptStr);
 }
-
+/*
 var getOriginFPS = createjs.Ticker.getFPS;
 function crackFPS(){
 		var scriptStr = '$(function(){'
@@ -175,7 +175,8 @@ function crackFPS(){
 }
 crackFPS();
 var timer3=setInterval(function(){if(getOriginFPS == createjs.Ticker.getFPS) crackFPS()},5000);
-
+*/
+/*
 function crackTap(){
 	var scriptStr = "";
 	scriptStr = ""
@@ -192,4 +193,5 @@ function crackTap(){
 	sendDirectScript2(scriptStr,"ckH");
 }
 crackTap();
+*/
 //var timer2=setInterval(function(){crackTap();},1000);
