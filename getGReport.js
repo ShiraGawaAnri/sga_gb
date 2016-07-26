@@ -5,8 +5,12 @@ $(function(){
 		getGameReport = Game.reportError;
 		Game.reportError = function(msg, url, line, column, err, callback){
 			console.info("normal running");
-			console.info("msg = ",msg,"url = ",url,"err = ",err,"callback = ",callback)
+//			console.info("msg = ",msg,"url = ",url,"err = ",err,"callback = ",callback)
 			getGameReport(msg,url,line,column,err,callback);
 		}
 	}
+	if (getGameReport != ""){
+		Game.reportError("kk","tt","2","3","as21s",null);
+	}
 })
+
