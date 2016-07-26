@@ -39,6 +39,8 @@
 			notifyMe("☢Warning☢拦截gfe(国内某辅助)ob☢Warning☢\n危险度:不明",1);
 		}else if(msg == "aJaxhAsCk9003"){
 			notifyMe("☢Warning☢guraburu(不明)ob☢Warning☢\n危险度:不明",1);
+		}else if(msg == "timePlan"){
+			notifyMe("☸执行定时周回任务☸",1);
 		}else{
 		notifyMe("官方消息:"+msg+"\n3秒后重新加载",1);
 		setTimeout(function(){location.reload();},3000);
