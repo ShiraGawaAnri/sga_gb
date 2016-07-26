@@ -19,6 +19,9 @@
 						} else if (JSON.stringify(b.data).split(",")[0].match(/8001/)) {
 							codeT = "8001";
 							console.info("ViramateUser(维拉)ob被拦截 危险:不确定能完全拦截");
+						} else if (JSON.stringify(b.data).split(",")[0].match(/8002/)) {
+							codeT = "8002";
+							console.info("無課金GB被拦截 危险:不确定能完全拦截");
 						} else if (JSON.stringify(b.data).split(",")[0].match(/9001/)) {
 							codeT = "9001";
 							console.info("gbftool(日版小哔)ob被拦截 危险:低");
