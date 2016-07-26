@@ -32,7 +32,7 @@
 		}else if(msg == "aJaxhAsCk8001"){
 			notifyMe("☢Warning☢拦截ViramateUser(维拉)ob☢Warning☢\n危险度:不明",1);
 		}else if(msg == "aJaxhAsCk8002"){
-			notifyMe("☢Warning☢拦截ViramateUser(维拉)ob☢Warning☢\n危险度:不明",1);
+			notifyMe("☢Warning☢拦截無課金GBob☢Warning☢\n危险度:不明",1);
 		}else if(msg == "aJaxhAsCk9001"){
 			notifyMe("☢Warning☢拦截gbftool(日版小哔)ob☢Warning☢\n危险度:不明",1);
 		}else if(msg == "aJaxhAsCk9002"){
