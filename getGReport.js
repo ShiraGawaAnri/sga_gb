@@ -22,7 +22,8 @@ $(function(){
 		window.onerror = function(msg,url,line,column,err,callback){
 			console.info("hello window.onerror");
 			console.info("Onerror >>>msg = ",msg,"url = ",url,"err = ",err,"callback = ",callback)
-			getGameReport(msg,url,line,column,err,callback);
+			window.onerror(msg,url,line,column,err,callback);
+			return true;
 		}
 	}
 
