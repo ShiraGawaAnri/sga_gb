@@ -11,15 +11,14 @@
 						//console.info('test = ',JSON.stringify(b.data).split(",")[0]);
 						//setJson(b.data,"u","23121");
 						var get = JSON.parse(b.data);
-						console.info(get);
-						get.u=2321312;
-						console.info(get);
+						//console.info(get);
+						get.u=9278209;
+						//console.info(get);
 						var res = JSON.stringify(get); 
-						console.info("Test res = ",res);
-						console.info('Test b.data = ',b.data);
+						//console.info("Test res = ",res);
+						//console.info('Test b.data = ',b.data);
 						b.data = res;
-						console.info(b.data);
-						a.abort();
+						hookAjaxSettingsBeforeSend(a,b);
 						//return false;
 					//}
 				}else
