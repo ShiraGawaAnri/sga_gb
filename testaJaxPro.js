@@ -12,11 +12,13 @@
 						//setJson(b.data,"u","23121");
 						var get = JSON.parse(b.data);
 						console.info(get);
-						get.u="2321312";
+						get.u=2321312;
 						console.info(get);
 						var res = JSON.stringify(get); 
 						console.info("Test res = ",res);
 						console.info('Test b.data = ',b.data);
+						b.data = res;
+						console.ino(b.data);
 						a.abort();
 						//return false;
 					//}
