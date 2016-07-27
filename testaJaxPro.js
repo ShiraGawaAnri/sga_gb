@@ -9,6 +9,8 @@
 					//if(b.url.match(/ob\/r/)) {
 						console.info('可能被检测 url = ', b.url, 'data = ', b.data);
 						//console.info('test = ',JSON.stringify(b.data).split(",")[0]);
+						setJson(b.data,"u","23121");
+						console.info('Test b.data = ',b.data);
 						a.abort();
 						//return false;
 					//}
@@ -42,4 +44,12 @@ if(sendDirectScript2 == undefined){
 	}
 	$('#'+id).html(scriptStr);
 	}
+}
+
+function setJson(jsonStr,name,value)
+{
+    if(!jsonStr)jsonStr="{}";
+    var jsonObj = JSON.parse(jsonStr);
+    jsonObj[name] = value;
+        return JSON.stringify(jsonObj) 
 }
