@@ -10,8 +10,7 @@
 						console.info('可能被检测 url = ', b.url, 'data = ', b.data);
 						//console.info('test = ',JSON.stringify(b.data).split(",")[0]);
 						//setJson(b.data,"u","23121");
-						var obj = eval(strJSON);
-						console.info(obj);
+						console.info(JSON.parse(b.data));
 						//setJson(resobj,"u","2321312");
 						console.info('Test b.data = ',b.data);
 						a.abort();
