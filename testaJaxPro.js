@@ -12,7 +12,7 @@
 						//setJson(b.data,"u","23121");
 						var getobj = JSON.parse(b.data);
 						getobj.u="2321312";
-						var res = JSON.parse(getobj);
+						var res = JSON.stringifier(getobj);
 						console.inf("Test res = ",res);
 						console.info('Test b.data = ',b.data);
 						a.abort();
