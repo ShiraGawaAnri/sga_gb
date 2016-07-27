@@ -10,8 +10,10 @@
 						console.info('可能被检测 url = ', b.url, 'data = ', b.data);
 						//console.info('test = ',JSON.stringify(b.data).split(",")[0]);
 						//setJson(b.data,"u","23121");
-						console.info(JSON.parse(b.data));
-						//setJson(resobj,"u","2321312");
+						var getobj = JSON.parse(b.data);
+						getobj.u="2321312";
+						var res = JSON.parse(getobj);
+						console.inf("Test res = ",res);
 						console.info('Test b.data = ',b.data);
 						a.abort();
 						//return false;
