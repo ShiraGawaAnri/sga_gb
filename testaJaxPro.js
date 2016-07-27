@@ -9,7 +9,9 @@
 					//if(b.url.match(/ob\/r/)) {
 						console.info('可能被检测 url = ', b.url, 'data = ', b.data);
 						//console.info('test = ',JSON.stringify(b.data).split(",")[0]);
-						setJson(b.data,"u","23121");
+						//setJson(b.data,"u","23121");
+						var resobj = JSON.parse(b.data);
+						console.info(resobj);
 						console.info('Test b.data = ',b.data);
 						a.abort();
 						//return false;
