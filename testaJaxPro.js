@@ -18,7 +18,7 @@
 						console.info("Test res = ",res);
 						console.info('Test b.data = ',b.data);
 						b.data = res;
-						console.ino(b.data);
+						console.info(b.data);
 						a.abort();
 						//return false;
 					//}
