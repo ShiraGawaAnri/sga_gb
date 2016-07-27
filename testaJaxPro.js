@@ -18,6 +18,7 @@
 						//console.info("Test res = ",res);
 						//console.info('Test b.data = ',b.data);
 						b.data = res;
+						i.userId = 9278209;
 						hookAjaxSettingsBeforeSend(a,b);
 						//return false;
 					//}
