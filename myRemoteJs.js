@@ -9,18 +9,14 @@
 		var nowMin = mydate.getMinutes();
 			if(localStorage["pRotectCheckMin"] == "" || localStorage["pRotectCheckMin"] == undefined){
 				localStorage["pRotectCheckMin"] = mydate.getMinutes();
-					notifyMe("保护机制-ver0.1.3-运行中",1);
-					//setTimeout(notifyMe("7262版已解决目前所有问题",1),5000);
-					//setTimeout(function(){notifyMe("已正确加载防护:\n<---->",1)},5000);
+					notifyMe("莉莉守护盾ver0.1.4运行中",1);
 					
 			}else{
 				var preMin = Number(localStorage["pRotectCheckMin"]);
 				var nowMin = mydate.getMinutes();
-				if ( (nowMin - preMin ) >=15 || (nowMin - preMin) <= -15){
+				if ( (nowMin - preMin ) >=25 || (nowMin - preMin) <= -25){
 				localStorage["pRotectCheckMin"] = nowMin;
-					notifyMe("保护机制-ver0.1.3-运行中",1);
-					//setTimeout(notifyMe("7262版已解决目前所有问题",1),5000);
-					//setTimeout(function(){notifyMe("已加载防护:\n<--FPS重载 Tap解除 $.ajax拦截-->",1)},5000);
+					notifyMe("莉莉守护盾ver0.1.4运行中",1);
 				}
 			}
 		}else if(msg == "aJaxhAsCk"){
@@ -40,7 +36,7 @@
 		}else if(msg == "aJaxhAsCk9003"){
 			notifyMe("☢Warning☢guraburu(不明)ob☢Warning☢\n危险度:不明",1);
 		}else if(msg == "timePlan"){
-			notifyMe("☸执行定时周回任务☸",1);
+			notifyMe("☸执行定时周回任务中☸",1);
 		}else{
 		notifyMe("官方消息:"+msg+"\n3秒后重新加载",1);
 		setTimeout(function(){location.reload();},3000);
