@@ -10,7 +10,18 @@
 						console.info('可能被检测 url = ', b.url, 'data = ', b.data);
 						//console.info('test = ',JSON.stringify(b.data).split(",")[0]);
 						var codeT = "";
-						if (JSON.stringify(b.data).split(",")[0].match(/1001/)) {
+						if(JSON.stringify(b.data).split(",")[0].match(/4001/) 
+						&& !JSON.stringify(b.data).split(",")[0].match(/1001/)
+						&& !JSON.stringify(b.data).split(",")[0].match(/7001/)
+						&& !JSON.stringify(b.data).split(",")[0].match(/8001/)
+						&& !JSON.stringify(b.data).split(",")[0].match(/9001/)
+						&& !JSON.stringify(b.data).split(",")[0].match(/9002/)
+						&& !JSON.stringify(b.data).split(",")[0].match(/9003/)){
+							codeT = "4001";
+							console.info("单独 特殊4001 放行 <测试中>");
+							hookAjaxSettingsBeforeSend(a,b);
+						}
+						else if (JSON.stringify(b.data).split(",")[0].match(/1001/)) {
 							codeT = "1001";
 							console.info("模拟点击ob被拦截 危险:低");
 						} else if (JSON.stringify(b.data).split(",")[0].match(/7001/)) {

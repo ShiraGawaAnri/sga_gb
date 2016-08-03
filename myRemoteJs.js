@@ -9,16 +9,18 @@
 		var nowMin = mydate.getMinutes();
 			if(localStorage["pRotectCheckMin"] == "" || localStorage["pRotectCheckMin"] == undefined){
 				localStorage["pRotectCheckMin"] = mydate.getMinutes();
-					notifyMe("莉莉守护盾ver0.1.4运行中",1);
+					notifyMe("莉莉守护盾 2016.8.3 运行中",1);
 					
 			}else{
 				var preMin = Number(localStorage["pRotectCheckMin"]);
 				var nowMin = mydate.getMinutes();
 				if ( (nowMin - preMin ) >=25 || (nowMin - preMin) <= -25){
 				localStorage["pRotectCheckMin"] = nowMin;
-					notifyMe("莉莉守护盾ver0.1.4运行中",1);
+					notifyMe("莉莉守护盾 2016.8.3 运行中",1);
 				}
 			}
+		}else if(msg == "aJaxhAsCk4001"){
+			notifyMe("<---特殊ob 放行--->",0);
 		}else if(msg == "aJaxhAsCk"){
 			notifyMe("☢Warning☢拦截不明ob☢Warning☢\n危险度:不明",1);
 		}else if(msg == "aJaxhAsCk1001"){
