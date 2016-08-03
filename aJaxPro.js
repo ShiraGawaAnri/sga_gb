@@ -63,7 +63,7 @@
 					//}
 				}else if(b.url.match(/\/gc\//)){
 					console.info('gc发送了: url = ',b.url,'data = ',b.data);
-					var getBdata = '"'+b.data+'"';
+					var getBdata = b.data;
 					var res = JSON.parse(getBdata);
 					console.info(res);
 					console.info(res.c);
