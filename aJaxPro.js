@@ -11,22 +11,22 @@
 						//console.info('test = ',JSON.stringify(b.data).split(",")[0]);
 						var codeT = "";
 						if(JSON.parse(b.data).c[4001] != undefined 
-						&& !JSON.stringify(b.data).split(",")[0].match(/1001/)
-						&& !JSON.stringify(b.data).split(",")[0].match(/1002/)
-						&& !JSON.stringify(b.data).split(",")[0].match(/7001/)
-						&& !JSON.stringify(b.data).split(",")[0].match(/8001/)
-						&& !JSON.stringify(b.data).split(",")[0].match(/9001/)
-						&& !JSON.stringify(b.data).split(",")[0].match(/9002/)
-						&& !JSON.stringify(b.data).split(",")[0].match(/9003/)
-						&& !JSON.stringify(b.data).split(",")[0].match(/9005/)){
+						&& JSON.parse(b.data).c[1001] == undefined 
+						&& JSON.parse(b.data).c[1002] == undefined
+						&& JSON.parse(b.data).c[7001] == undefined
+						&& JSON.parse(b.data).c[8001] == undefined
+						&& JSON.parse(b.data).c[9001] == undefined
+						&& JSON.parse(b.data).c[9002] == undefined
+						&& JSON.parse(b.data).c[9003] == undefined
+						&& JSON.parse(b.data).c[9005] == undefined){
 							codeT = "4001";
 							console.info("单独 特殊4001 放行");
 							hookAjaxSettingsBeforeSend(a,b);
 						}
-						else if (JSON.stringify(b.data).split(",")[0].match(/1001/)) {
+						else if (JSON.parse(b.data).c[1001] != undefined ) {
 							codeT = "1001";
 							console.info("模拟点击ob被拦截 危险:低");
-						} else if (JSON.stringify(b.data).split(",")[0].match(/1002/)) {
+						} else if (JSON.parse(b.data).c[1002] != undefined ) {
 							codeT = "1002";
 							console.info("篡改鼠标X,Yob被拦截 危险:低");
 						} else if (JSON.stringify(b.data).split(",")[0].match(/7001/)) {
