@@ -20,7 +20,7 @@
 				}
 			}
 		}else if(msg == "aJaxhAsCk4001"){
-			notifyMe("<---特殊ob 放行--->",0);
+			notifyMe("<---特殊ob 放行--->",1);
 		}else if(msg == "aJaxhAsCk"){
 			notifyMe("☢Warning☢拦截不明ob☢Warning☢\n危险度:不明",1);
 		}else if(msg == "aJaxhAsCk1001"){
