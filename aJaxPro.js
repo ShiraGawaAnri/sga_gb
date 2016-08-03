@@ -69,10 +69,10 @@
 						if(sessionStorage["pressTimes"] == undefined){
 							sessionStorage["pressTimes"] = 1;
 						}else{
-							sessionStorage["pressTimes"] += 1;		
+							sessionStorage["pressTimes"] = Number(sessionStorage["pressTimes"])+1;		
 						}
-						if(res.c[1002] > sessionStorage["pressTimes"])
-							res.c[1002] = sessionStorage["pressTimes"];
+						if(res.c[1002] > Number(sessionStorage["pressTimes"]))
+							res.c[1002] = Number(sessionStorage["pressTimes"]);
 					}
 					//console.info(res);
 					//console.info(res.c);
