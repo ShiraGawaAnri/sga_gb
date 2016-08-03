@@ -61,6 +61,8 @@
 						if(codeT != "4001" ) a.abort();
 						//return false;
 					//}
+				}else if(b.url.match(/\/gc\//)){
+					console.info('gc发送了: url = ',b.url,'data = ',b.data);
 				}else
 					hookAjaxSettingsBeforeSend(a,b);
 			}
