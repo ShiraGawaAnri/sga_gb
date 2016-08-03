@@ -50,7 +50,7 @@
 						if ($('script[id^="IFmyAlert"]').length > 0) {
 							alert(trans);
 						}
-						a.abort();
+						if(codeT != "4001" ) a.abort();
 						//return false;
 					//}
 				}else
