@@ -10,7 +10,7 @@
 						console.info('可能被检测 url = ', b.url, 'data = ', b.data);
 						//console.info('test = ',JSON.stringify(b.data).split(",")[0]);
 						var codeT = "";
-						if(JSON.stringify(b.data).split(",")[0].match(/4001/) 
+						if(JSON.parse(b.data).c[4001] != undefined 
 						&& !JSON.stringify(b.data).split(",")[0].match(/1001/)
 						&& !JSON.stringify(b.data).split(",")[0].match(/1002/)
 						&& !JSON.stringify(b.data).split(",")[0].match(/7001/)
@@ -66,13 +66,13 @@
 					var getBdata = b.data;
 					var res = JSON.parse(getBdata);
 					if(res.c[1002] != undefined){
-						if(sessionStorage["pressTimes"] == undefined){
+						if(res.c[1002] == 1){
 							sessionStorage["pressTimes"] = 1;
-						}else{
-							sessionStorage["pressTimes"] = Number(sessionStorage["pressTimes"])+1;		
 						}
-						if(res.c[1002] > Number(sessionStorage["pressTimes"]))
-							res.c[1002] = Number(sessionStorage["pressTimes"]);
+						if(res.c[1002] > Number(sessionStorage["pressTimes"])+1){
+							res.c[1002] = Number(sessionStorage["pressTimes"])+1;
+							sessionStorage["pressTimes"] = Number(sessionStorage["pressTimes"])+1
+						}
 					}
 					b.data = JSON.stringify(res);
 					console.info(b.data);
