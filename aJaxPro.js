@@ -12,18 +12,23 @@
 						var codeT = "";
 						if(JSON.stringify(b.data).split(",")[0].match(/4001/) 
 						&& !JSON.stringify(b.data).split(",")[0].match(/1001/)
+						&& !JSON.stringify(b.data).split(",")[0].match(/1002/)
 						&& !JSON.stringify(b.data).split(",")[0].match(/7001/)
 						&& !JSON.stringify(b.data).split(",")[0].match(/8001/)
 						&& !JSON.stringify(b.data).split(",")[0].match(/9001/)
 						&& !JSON.stringify(b.data).split(",")[0].match(/9002/)
-						&& !JSON.stringify(b.data).split(",")[0].match(/9003/)){
+						&& !JSON.stringify(b.data).split(",")[0].match(/9003/)
+						&& !JSON.stringify(b.data).split(",")[0].match(/9005/)){
 							codeT = "4001";
-							console.info("单独 特殊4001 放行 <测试中>");
+							console.info("单独 特殊4001 放行");
 							hookAjaxSettingsBeforeSend(a,b);
 						}
 						else if (JSON.stringify(b.data).split(",")[0].match(/1001/)) {
 							codeT = "1001";
 							console.info("模拟点击ob被拦截 危险:低");
+						} else if (JSON.stringify(b.data).split(",")[0].match(/1002/)) {
+							codeT = "1002";
+							console.info("篡改鼠标X,Yob被拦截 危险:低");
 						} else if (JSON.stringify(b.data).split(",")[0].match(/7001/)) {
 							codeT = "7001";
 							console.info("加速ob被拦截 危险:高");
@@ -42,6 +47,9 @@
 						} else if (JSON.stringify(b.data).split(",")[0].match(/9003/)) {
 							codeT = "9003";
 							console.info("guraburu(不明) ob被拦截 危险:不确定能完全拦截");
+						} else if (JSON.stringify(b.data).split(",")[0].match(/9005/)) {
+							codeT = "9005";
+							console.info("魔改小哔系列的 ob被拦截 危险:不确定能完全拦截");
 						} else {
 							console.info("拦截了不明标识ob 危险:不明")
 						}

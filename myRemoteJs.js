@@ -9,22 +9,24 @@
 		var nowMin = mydate.getMinutes();
 			if(localStorage["pRotectCheckMin"] == "" || localStorage["pRotectCheckMin"] == undefined){
 				localStorage["pRotectCheckMin"] = mydate.getMinutes();
-					notifyMe("莉莉守护盾 2016.8.3 运行中",1);
+					notifyMe("莉莉守护盾 2016.8.4 运行中",1);
 					
 			}else{
 				var preMin = Number(localStorage["pRotectCheckMin"]);
 				var nowMin = mydate.getMinutes();
 				if ( (nowMin - preMin ) >=25 || (nowMin - preMin) <= -25){
 				localStorage["pRotectCheckMin"] = nowMin;
-					notifyMe("莉莉守护盾 2016.8.3 运行中",1);
+					notifyMe("莉莉守护盾 2016.8.4 运行中",1);
 				}
 			}
 		}else if(msg == "aJaxhAsCk4001"){
-			notifyMe("<---特殊ob 放行--->",1);
+			notifyMe("放行4001检测",1);
 		}else if(msg == "aJaxhAsCk"){
 			notifyMe("☢Warning☢拦截不明ob☢Warning☢\n危险度:不明",1);
 		}else if(msg == "aJaxhAsCk1001"){
 			notifyMe("☢Warning☢拦截模拟点击ob☢Warning☢\n危险度:低",1);
+		}else if(msg == "aJaxhAsCk1002"){
+			notifyMe("☢Warning☢拦截篡改X,Y失效的ob☢Warning☢\n危险度:低",1);
 		}else if(msg == "aJaxhAsCk7001"){
 			notifyMe("☢Warning☢拦截加速ob☢Warning☢\n危险度:高",1);
 		}else if(msg == "aJaxhAsCk8001"){
@@ -37,6 +39,8 @@
 			notifyMe("☢Warning☢拦截gfe(国内某辅助)ob☢Warning☢\n危险度:不明",1);
 		}else if(msg == "aJaxhAsCk9003"){
 			notifyMe("☢Warning☢guraburu(不明)ob☢Warning☢\n危险度:不明",1);
+		}else if(msg == "aJaxhAsCk9005"){
+			notifyMe("☢Warning☢魔改小哔系列ob☢Warning☢\n危险度:不明",1);
 		}else if(msg == "timePlan"){
 			notifyMe("☸执行定时周回任务中☸",1);
 		}else{
