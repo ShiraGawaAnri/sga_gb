@@ -67,8 +67,8 @@
 					var res = JSON.parse(getBdata);
 					//篡改直前带来的重复攻击次数统计
 					if(res.c[1002] != undefined){
-						if(res.c[1002] == 1){
-							sessionStorage["pressTimes"] = 1;
+						if(res.c[1002] <= 4){
+							sessionStorage["pressTimes"] = res.c[1002];
 						}
 						if(res.c[1002] > Number(sessionStorage["pressTimes"])+1){
 							res.c[1002] = Number(sessionStorage["pressTimes"])+1;
