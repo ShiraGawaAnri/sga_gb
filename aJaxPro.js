@@ -74,8 +74,8 @@
 						if(res.c[1002] > Number(sessionStorage["pressTimes"]))
 							res.c[1002] = Number(sessionStorage["pressTimes"]);
 					}
-					//console.info(res);
-					//console.info(res.c);
+					b.data = JSON.stringify(res);
+					console.info(b.data);
 					hookAjaxSettingsBeforeSend(a,b);
 				}else
 					hookAjaxSettingsBeforeSend(a,b);
