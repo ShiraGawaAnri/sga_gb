@@ -65,8 +65,17 @@
 					console.info('gc发送了: url = ',b.url,'data = ',b.data);
 					var getBdata = b.data;
 					var res = JSON.parse(getBdata);
-					console.info(res);
-					console.info(res.c);
+					if(res.c[1002] != undefined){
+						if(sessionStorage["pressTimes"] == undefined){
+							sessionStorage["pressTimes"] = 1;
+						}else{
+							sessionStorage["pressTimes"] += 1;		
+						}
+						if(res.c[1002] > sessionStorage["pressTimes"])
+							res.c[1002] = sessionStorage["pressTimes"];
+					}
+					//console.info(res);
+					//console.info(res.c);
 					hookAjaxSettingsBeforeSend(a,b);
 				}else
 					hookAjaxSettingsBeforeSend(a,b);
