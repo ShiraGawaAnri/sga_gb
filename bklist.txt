@@ -1,1 +1,1 @@
-﻿getInfo(console.info("okllll"))
+﻿getInfo(["<input type='text' value='1222'/>"])
