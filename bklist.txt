@@ -1,1 +1,1 @@
-﻿getInfo(["<input type='text' value='1222'/>"])
+﻿12232
